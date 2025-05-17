@@ -1,0 +1,30 @@
+[
+  {
+    "question": "sample q 1",
+    "correct_answers": ["answer2", "answe6"],
+    "wrong_answers": ["answer1", "answe3", "answe4"],
+    "classification": "A",
+    "type": "AB"
+  },
+  {
+    "question": "sample q 2",
+    "correct_answers": ["answer5", "answe3"],
+    "wrong_answers": ["answer2", "answe1", "answe6"],
+    "classification": "A",
+    "type": "AB"
+  },
+  {
+    "question": "sample q 2",
+    "correct_answers": ["answer5", "answe3"],
+    "wrong_answers": ["answer2", "answe1", "answe6"],
+    "classification": "A",
+    "type": "AB"
+  },
+  {
+    "question": "sample q 2",
+    "correct_answers": ["answer5", "answe3"],
+    "wrong_answers": ["answer2", "answe1", "answe6"],
+    "classification": "A",
+    "type": "AB"
+  }
+]
