@@ -1,1 +1,1 @@
-from .Window import Window
+from .SystemInfo import SystemInfo

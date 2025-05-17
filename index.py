@@ -1,10 +1,8 @@
-from libs import Window
-
+from libs import SystemInfo
 
 def main():
-    window: Window = Window()
+    window: SystemInfo = SystemInfo()
     window.start()
-
 
 if __name__ == "__main__":
     main()
