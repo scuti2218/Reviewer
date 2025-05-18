@@ -1,9 +1,10 @@
 from .Player import Player
 from .Topic import Topic
+from .Classification_List import Classification_List
 
 from .Enums import GameMode, ChoiceOption
 from .CRUD import check_dir, make_dir
-from .FileData import get_configs, get_data
+from .FileData import get_configs, get_question_list, get_classification_list
 from .Printer import print_question, print_options, print_spacer, print_title, input_stopper, clear_console
 from .Prompter import prompt
 
@@ -22,7 +23,11 @@ class SystemInfo:
     selected: Topic = None
     amount: int = 0
     
-    def __init__(self):
+    classifications: Classification_List = None
+    player: Player = None
+    
+    def __init__(self, player: Player):
+        self.player = player
         self.initialize()
 
     def __str__(self):
@@ -51,6 +56,9 @@ class SystemInfo:
             print_options(topics)
             self.selected = self.topics[prompt(topics)]  
             print_spacer()
+            
+    def get_classifications(self):
+        self.classifications = get_classification_list(self.selected.dir)
             
     def get_gamemode(self):
         print_question("Choose your Gamemode: ", 2)
@@ -99,7 +107,8 @@ class SystemInfo:
         print_spacer()
         
         self.get_topic()
-        question_list = get_data(self.selected.dir)
+        question_list = get_question_list(self.selected.dir)
+        self.get_classifications()
         
         self.get_gamemode()
         self.get_choiceoption()
@@ -108,8 +117,8 @@ class SystemInfo:
         self.get_amount(question_list.length)
         self.show_configs()
         
-        player = Player(question_list)
-        player.start(self.gamemode, self.choiceoption, self.amount)
+        self.player.activate(question_list, self.classifications)
+        self.player.start(self.gamemode, self.choiceoption, self.amount)
                 
         print_question("Do you want to restart?", 1)
         listed = ["Y", "N"]

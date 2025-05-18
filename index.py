@@ -1,7 +1,8 @@
-from libs import SystemInfo
+from libs import SystemInfo, Player
 
 def main():
-    window: SystemInfo = SystemInfo()
+    player: Player = Player()
+    window: SystemInfo = SystemInfo(player)
     window.start()
 
 if __name__ == "__main__":

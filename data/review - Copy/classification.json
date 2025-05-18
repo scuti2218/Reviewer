@@ -1,4 +1,12 @@
-{
-    "A" : "class1",
-    "B" : "class2"
-}
+[
+    {
+        "name" : "Classification 1",
+        "label" : "A",
+        "info" : ""
+    },
+    {
+        "name" : "Classification 2",
+        "label" : "B",
+        "info" : ""
+    }
+]

@@ -26,7 +26,7 @@ def prompt_answer(question: Question):
                     else:
                         print(f"Choose a different answer!")
                 else:
-                    print(f"Prompt only from A to {chr(question.length - 1)}!")
+                    print(f"Prompt only from A to {chr(65 + question.length - 1)}!")
             else:
                 answers_correctness.append(temp in correct_answers)
                 break

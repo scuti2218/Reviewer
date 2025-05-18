@@ -5,13 +5,25 @@ from os.path import join as path_join, isdir, exists
 from .Question import Question
 from .Question_List import Question_List
 from .Answer import Answer
+from .Classification import Classification
+from .Classification_List import Classification_List
 
-def get_data(dir: str) -> Question_List:
-    filepath: str = path_join(dir, "index.json")
+def get_json_data(dir: str, filename: str):
+    filepath: str = path_join(dir, filename + ".json")
     with open(filepath, 'r', encoding='utf-8') as file:
-        data : list[dict[str, str | list[str]]] = json.load(file)
-    return create_question_list(data)
+        data = json.load(file)
+    return data
 
+def get_classification_list(dir: str):
+    return create_classification_list(get_json_data(dir, "classification"))
+
+def create_classification_list(raw_classifications: list[dict[str, str]]) -> Classification_List:
+    result: Classification_List = Classification_List()
+    result.set_value([Classification(i["label"], i["name"], i["info"]) for i in raw_classifications])
+    return result
+
+def get_question_list(dir: str) -> Question_List:
+    return create_question_list(get_json_data(dir, "index"))
         
 def create_question_list(raw_questions: list[dict[str, str | list[str]]]) -> Question_List:
     questions : Question_List = Question_List()
