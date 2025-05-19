@@ -1,0 +1,17 @@
+[
+    {
+        "title" : "Classification 1",
+        "key" : "A",
+        "info" : "Class 1"
+    },
+    {
+        "title" : "Classification 2",
+        "key" : "B",
+        "info" : "Class 2"
+    },
+    {
+        "title" : "Classification 3",
+        "key" : "C",
+        "info" : ""
+    }
+]

@@ -1,0 +1,47 @@
+[
+    {
+        "title" : "Business Process Management",
+        "key" : "A",
+        "info" : ""
+    },
+    {
+        "title" : "SAP Signavio Process Collaboration Hub",
+        "key" : "B",
+        "info" : ""
+    },
+    {
+        "title" : "Process Mining",
+        "key" : "C",
+        "info" : ""
+    },
+    {
+        "title" : "SAP Signavio Process Intelligence",
+        "key" : "D",
+        "info" : ""
+    },
+    {
+        "title" : "SAP Signavio Process Intelligence – Data Management and ETL",
+        "key" : "E",
+        "info" : ""
+    },
+    {
+        "title" : "SiGNAL",
+        "key" : "F",
+        "info" : ""
+    },
+    {
+        "title" : "SAP Signavio Process Insights",
+        "key" : "G",
+        "info" : ""
+    },
+    {
+        "title" : "Plug and Gain",
+        "key" : "H",
+        "info" : ""
+    },
+    {
+        "title" : "Unclassified",
+        "key" : "Z",
+        "info" : ""
+    }
+]
