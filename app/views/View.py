@@ -23,7 +23,7 @@ class View:
         self.root.overrideredirect(False)
         
     def initialize(self):
-        pass
+        self.btn_create("sample", text='Stop', width=25)
         
     def update(self):
         self.root.title("Tkinter Fullscreen Centered Window")

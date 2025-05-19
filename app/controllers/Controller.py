@@ -5,13 +5,24 @@ class Controller:
     def __init__(self, view: View, model: Model):
         self.view = view
         self.model = model
+        self.commands: dict[str, function] = {}
         self.initialize()
         
     def initialize(self):
         self.view.initialize()
         self.model.initialize()
         
-        self.view.btn_create("sample", text='Stop', width=25)
+        self.commands["sample"] = self.sample
+        
+        self.initialize_commands()
+        
+    def initialize_commands(self):
+        for key, command in self.commands.items():
+            if key in self.view.buttons.keys():
+                self.view.buttons[key].configure(command=command)
+        
+    def sample(self):
+        print("Sample")
         
     def update(self):
         self.view.update()

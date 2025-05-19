@@ -23,6 +23,9 @@ class TkWidget(Generic[TWidget]):
     
     def show(self, *args, **kwargs):
         self.value.pack(*args, **kwargs)
+        
+    def configure(self, **kwargs):
+        self.value.configure(**kwargs)
 
 # TkButton =============================================================
 class TkButton(TkWidget[Button]):
