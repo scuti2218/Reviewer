@@ -1,19 +1,25 @@
-## Reviewer
-Reviewer Program
-
- ## Game Modes:
-- Limited: Reveal scores after all questions
-- Flashcard: Reveal score after each question
+## Game Modes:
+- Tournament
+   - Show results at the end
+   - Score must be submitted to leaderboards
+   - Cannot go back to previous questions
+- Quiz
+   - Show results at the end
+   - Score can be submitted to leaderboards
+   - Can go back to previous question
+- Flashcard
+   - Show results after each question
+   - No leaderboards
+   - Cannot go back to previous questions
 
 ## Choice Options:
 - Multiple Choice: Choose from sets of Answers
 - Enumeration: Write your answer/s
 
 ## How to use:
-1. Download the ReviewerV0.1.0.exe
-2. Open the application to create the folder called "data" or create the folder manually
-3. Put topics inside the folder "data"
-3.1. You can try to use the sample topics in "data.zip"
+1. Download the ReviewerV0.1.2.exe
+2. Open the application to create the folder called "data" or download topics from database using TopicDownloader.exe
+3. If manually created, put topics inside the folder "data"
 4. Have fun using the reviewer
 5. Leave a review and a suggestion!
 
@@ -21,12 +27,11 @@ Reviewer Program
 - Infinite Amount: Play as long as you like
 - Better UI instead of console
 - Bug Fixes
-- Classifications per question
+- Custom Mode
 
 ## What's Changed
-* First Build by @scuti2218 in https://github.com/scuti2218/Reviewer/pull/2
-
-## New Contributors
-* @scuti2218 made their first contribution in https://github.com/scuti2218/Reviewer/pull/2
-
-**Full Changelog**: https://github.com/scuti2218/Reviewer/commits/v0.1.0-alpha
+* Fourth Build by @scuti2218 in https://github.com/scuti2218/Reviewer/pull/2
+* UI Updates
+* Added wrong info explanations
+* Fixed codes for TopicHasher, TopicDownloader, TopicUploader, Leaderboards
+* Removed TopicBrowser
