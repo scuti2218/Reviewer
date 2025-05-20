@@ -9,6 +9,7 @@ class Question(ModelData, Randomizable[Answer]):
         self.category: str = ""
         self.correct_answers: list[str] = []
         self.wrong_answers: list[str] = []
+        self.correct_explanation: list[str] = []
         super().__init__(**kwargs)
         self.set_value(*[Answer(title = i, is_correct = True) for i in self.correct_answers],
                        *[Answer(title = i, is_correct = False) for i in self.wrong_answers])

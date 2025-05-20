@@ -286,12 +286,13 @@ class Controller:
                     is_corrects[i] = True
                 print_spacer()
                 print_title(self.model.get_category(question.category).title, True)
-                print_spacer()
-                print_question(f"{["❌ Wrong", "✔️ Right"][is_right]} Answer!")
-                print_spacer()
-                [print_options([answer.title], chr(65 + i)) for i, answer in enumerate(answers) if answer.is_correct]
-                print_spacer()
-                print_question(self.model.score.show())
+                print_question(f"{["❌ Wrong", "✔️ Right"][is_right]} Answer! {self.model.score.show()}")
+                if not is_right:
+                    [print_options([answer.title], chr(65 + i)) for i, answer in enumerate(answers) if answer.is_correct]
+                print_divider()
+                
+                print_title(f"Explanations")
+                print_definitions([tip for tip in question.correct_explanation])
                 print_divider()
                 print_pause()
                 if i_max_cur == i:
@@ -316,27 +317,29 @@ class Controller:
                     category_scores[question.category][0] += 1
                 category_scores[question.category][1] += 1
                 
-                print_title(f"Question #{i + 1}", True)
+                print_title(f"Question #{i + 1}  {["❌ Wrong", "✔️ Right"][is_right]}", True)
                 print_question(question.show())
-                print_spacer()
                 [print_options([answer.title], chr(65 + j)) for j, answer in enumerate(answers)]
-                print_spacer()
-                
-                print_title(f"Your Answer is {["❌ Wrong", "✔️ Right"][is_right]}", True)
-                [print_options([answers[j].title], chr(65 + j)) for j in all_answers[i]]
-                print_spacer()
-                
-                print_title("Correct Answers", True)
-                [print_options([answer.title], chr(65 + j)) for j, answer in enumerate(answers) if answer.is_correct]
-                
                 print_divider()
-                print_spacer()
+                
+                print_title("Your Answers")
+                [print_options([answers[j].title], chr(65 + j)) for j in all_answers[i]]
+                print_divider()
+                
+                if not is_right:
+                    print_title("Correct Answers")
+                    [print_options([answer.title], chr(65 + j)) for j, answer in enumerate(answers) if answer.is_correct]
+                    print_divider()
+                
+                print_title("Explanations")
+                print_options([tip for tip in question.correct_explanation])
+                print_title(f"Question #{i + 1}  {["❌ Wrong", "✔️ Right"][is_right]}", True)
+                print_spacer(2)
                 
             print_spacer(3)
-            print_title("Final Score", True)
-            print_question(self.model.score.show())
+            print_title(f"Final Score ({self.model.score.show()})", True)
             [print_question(f"({key}) {self.model.get_category(key).title} {Score(current = value[0], maximum = value[1]).show()}")  for key, value in category_scores.items() if value[1] != 0]
-            print_title("Final Score", True)
+            print_divider()
             print_spacer(2)
             self.temp_score.current = self.model.score.current
             self.temp_score.maximum = self.model.score.maximum

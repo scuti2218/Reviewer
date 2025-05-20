@@ -6,12 +6,11 @@ def print_divider():
     print(count_divider * "=")
     
 def print_title(text: str, add_separator: bool = False):
-    temp_text = text.capitalize()
+    temp_text = text.upper()
     if not add_separator:
         print(temp_text)
         return
-    temp = 10 * "="
-    temp += f" {temp_text} "
+    temp = f"== {temp_text} "
     temp += (count_divider - len(temp)) * "="
     print(temp)
 
@@ -30,7 +29,7 @@ def print_question(question: str, num: int = -1):
     
 def print_options(data: list[str], start_char = "A"):
     for i in range(len(data)):
-        print(f"({chr(ord(start_char) + i)}) {data[i]}")
+        print(f"{[start_char, f"({chr(ord(start_char) + i)})"][ord(start_char) in range(65,91)]} {data[i]}")
         
 def print_definitions(data: list[str]):
     for i in range(len(data)):
