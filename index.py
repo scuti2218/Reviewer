@@ -1,9 +1,11 @@
-from libs import SystemInfo, Player
+from app import Controller, View, Model
+
 
 def main():
-    player: Player = Player()
-    window: SystemInfo = SystemInfo(player)
-    window.start()
+    view = View()
+    model = Model()
+    controller = Controller(view, model)
+    controller.update()
 
 if __name__ == "__main__":
     main()

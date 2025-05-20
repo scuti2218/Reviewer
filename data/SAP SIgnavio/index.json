@@ -1,0 +1,825 @@
+[
+    {
+        "correct_answers": [
+            "True"
+        ],
+        "wrong_answers": [
+            "False"
+        ],
+        "token": "0085fe852686a0da8faf3b4ba7f158de6a29634fe686c6bc7e18529540238e67",
+        "question": "If you select the end-to-end process, Lead to Cash, you will only see only those process flows that are relevant for Lead to Cash.",
+        "category": "G"
+    },
+    {
+        "correct_answers": [
+            "A variant is defined by a set of cases following the same process flow.",
+            "Each variant is unique."
+        ],
+        "wrong_answers": [
+            "There are cases which are not included in any variant",
+            "A process cannot have more than 100 variants"
+        ],
+        "token": "03550fd710cd337b5099827fba7b579ee612d1e0801fb044415bfb91195d2350",
+        "question": "Which statements are correct about variants in process mining?",
+        "category": "C"
+    },
+    {
+        "correct_answers": [
+            "Can be set on widget, chapter and investigation level."
+        ],
+        "wrong_answers": [
+            "There can only be one filter condition.",
+            "Can only be set on investigation level."
+        ],
+        "token": "04ee630fae157938edb9fbb322b653e8d2d7f2d97e58bb04bfc999faddeb354d",
+        "question": "What is true about Filters?",
+        "category": "D"
+    },
+    {
+        "correct_answers": [
+            "Process Conformance"
+        ],
+        "wrong_answers": [
+            "Process Discovery",
+            "Process Performance"
+        ],
+        "token": "0809a669b442380c3be2009b41133a3711dc932f15d37f214553104da575d0ac",
+        "question": "To which capability does the following use case belong: Identify the share of non-conformant cases.",
+        "category": "C"
+    },
+    {
+        "correct_answers": [
+            "Case ID, event name identifier, and event timestamps"
+        ],
+        "wrong_answers": [
+            "Case ID and event timestamps",
+            "Case ID and event name identifier",
+            "Event name identifier and event timestamps"
+        ],
+        "token": "0e5a386d86f5327701989dc884c7bb00251b2950eebfdcbf262754717f19f6c5",
+        "question": "What's the minimum data requirement for a case?",
+        "category": "E"
+    },
+    {
+        "correct_answers": [
+            "Process Discovery"
+        ],
+        "wrong_answers": [
+            "Process Conformance",
+            "Process Performance"
+        ],
+        "token": "17e3302da7bfce35be9c7f92a6368124cc8d46117ab83847054e09d6d1ec3c11",
+        "question": "To which capability does the following use case belong: Figure out the most executed branch in a process (as-is).",
+        "category": "C"
+    },
+    {
+        "correct_answers": [
+            "Distribution"
+        ],
+        "wrong_answers": [
+            "Breakdown",
+            "Over Time"
+        ],
+        "token": "1beded28337825a568706a51507dee606da3b8573bac33c5223717cd7fc16280",
+        "question": "\"What's the average cycle time and what outliers exist?\" Choose the right widget type to answer this question.",
+        "category": "D"
+    },
+    {
+        "correct_answers": [
+            "Automation Rate",
+            "Exception"
+        ],
+        "wrong_answers": [
+            "Backlog",
+            "Changes",
+            "Master Data"
+        ],
+        "token": "1c587cc1f17cdcc2b0f0700448a69f448a60aa7d64443ac25872cc781e61f905",
+        "question": "Which Process Performance Indicator (PPI) categories are most relevant when striving to identify automation potential?",
+        "category": "H"
+    },
+    {
+        "correct_answers": [
+            "Process Funnel",
+            "Diagram",
+            "Process Conformance"
+        ],
+        "wrong_answers": [
+            "Process Conformance",
+            "Process Funnel",
+            "Variant Explorer",
+            "Process Discovery",
+            "Diagram"
+        ],
+        "token": "24cbfc6c6adcf5b316530adfbbe51eacf7e40916423b81c49cae35c8efdf69e0",
+        "question": "Select all widget types requiring a linked process model to be used.",
+        "category": "D"
+    },
+    {
+        "correct_answers": [
+            "Creating multiple chapters to focus on specific cases by setting a filter.",
+            "Creating different investigations for different analytical topics."
+        ],
+        "wrong_answers": [
+            "Creating multiple widgets.",
+            "Creating a case table."
+        ],
+        "token": "2b29720a2f8e66a0f910a4acaf642a3fbb946db9c645da838ce1de12691dfd5f",
+        "question": "What can help to analyze and structure a larger process?",
+        "category": "D"
+    },
+    {
+        "correct_answers": [
+            "Automation, Cycletime, Dropouts, Conformance, Changes, SLAs"
+        ],
+        "wrong_answers": [
+            "Automation, SLAs, Changes, Conformance, Journey Models",
+            "Automation, Changes, Cycle time, Dropouts, SLAs, Process Architectures",
+            "Automation, Dropouts, SLAs, Workflows, Changes, Cycle time"
+        ],
+        "token": "313d8de2a7b6057944bb2bdacecaf64e47500b51b415bc74033e900bdabcba92",
+        "question": "Which one of these groups belong to the SiGNAL Library & Metrics?",
+        "category": "F"
+    },
+    {
+        "correct_answers": [
+            "Average of an Attribute"
+        ],
+        "wrong_answers": [
+            "Sum of an Attribute",
+            "Case ID",
+            "Distribution over time"
+        ],
+        "token": "39f1dcbcc18cdda381920c33338bec1246e9e78dca64b81c8296e3c8fdba3023",
+        "question": "What cannot be displayed with the Distribution widget?",
+        "category": "D"
+    },
+    {
+        "correct_answers": [
+            "The Distribution widget visualizes the frequency and spread of data",
+            "The Process Discovery widget is the first widget, which gets auto-created by the system after creating a new investigation.",
+            "The Breakdown widget includes all variants but shows only one single aggregated value."
+        ],
+        "wrong_answers": [
+            "The Breakdown widget visualizes different values within a category (defined as an attribute).",
+            "The Process Discovery widget shows the total amount of case attributes (e.g. order value or amount of customers)."
+        ],
+        "token": "4085dcf5b6f373ee983c09b51be2d612a8a784aa1c6730cb19282f78edee5255",
+        "question": "Select all correct statements.",
+        "category": "D"
+    },
+    {
+        "correct_answers": [
+            "No, SiGNAL is just SQL oriented and does not have the same queries, e.g. inner joins?"
+        ],
+        "wrong_answers": [
+            "No, SiGNAL has more functions than SQL!",
+            "Yes, SiGNAL is exactly the same query language like SQL!"
+        ],
+        "token": "446e5e50de3b504584bca7133c9bdf94a354c3be47ad219d4eeb5549220ee20b",
+        "question": "Is SiGNAL equal to SQL?",
+        "category": "F"
+    },
+    {
+        "correct_answers": [
+            "False"
+        ],
+        "wrong_answers": [
+            "True"
+        ],
+        "token": "45a08e4b5e60fba995f96963fa5a0f10735d3a9645350d3b0690cfd36ea878a8",
+        "question": "All processes and their included information can be viewed by all hub users.",
+        "category": "B"
+    },
+    {
+        "correct_answers": [
+            "For a selected process step, every company code is analyzed and ranked according to the best-run score. This way, you can easily spot the outliers and investigate the company codes that perform well or poorly."
+        ],
+        "wrong_answers": [
+            "A selected process step is compared to the same process step in other companies of the same industry. By using this ranking, you can easily spot the outliers and investigate the process steps that perform well or poorly.",
+            "An indicator shows to what extent a company is running an effective process in their SAP system.",
+            "An indicator shows to what extent a company is running an effective process in their non-SAP system."
+        ],
+        "token": "4ffcbe55284264d75dd8bc58ae8aae8c492c6961baaeba24cf917b2262580b90",
+        "question": "How does internal benchmarking work?",
+        "category": "H"
+    },
+    {
+        "correct_answers": [
+            "Master Data",
+            "Exception"
+        ],
+        "wrong_answers": [
+            "Automation Rate",
+            "Backlog"
+        ],
+        "token": "50e2403d0fff4cece38db2e64ecccbf3fd2d82f79019ea1ece2b91b5ef094f07",
+        "question": "Which Process Performance Indicators (PPIs) are most relevant for the current configuration and master data set up?",
+        "category": "H"
+    },
+    {
+        "correct_answers": [
+            "Operational process management focuses on tasks and responsibilities in processes.",
+            "Strategic process management includes the alignment of the company's processes to the overall company goals."
+        ],
+        "wrong_answers": [
+            "Strategic process management focuses on tasks and responsibilities in processes.",
+            "Operational process management focuses on the alignment of the company's processes to the overall company goals."
+        ],
+        "token": "51761d7da7ff40d430a476f24413575fed84a3c4eb9876fe193952fef33e97ff",
+        "question": "Which answers are correct about process management?",
+        "category": "A"
+    },
+    {
+        "correct_answers": [
+            "With SiGNAL you are able to create more in depth process queries for process analysis in Signavio."
+        ],
+        "wrong_answers": [
+            "With SiGNAL you are able to create queries to model processes in Signavio.",
+            "With SiGNAL you are able to create queries for editing, deleting, changing records in data tables.",
+            "With SiGNAL you are able to create a new database management."
+        ],
+        "token": "5552654e364fe9a3e1546ab2d65a0cc5d4c55abcc5c0f812ba8bf818d726fc13",
+        "question": "What is the main function of SiGNAL?",
+        "category": "F"
+    },
+    {
+        "correct_answers": [
+            "Data sets",
+            "Process models"
+        ],
+        "wrong_answers": [
+            "SVG graphics",
+            "Dictionary objects"
+        ],
+        "token": "590fc952df104b9fb5d67db3af53ac2d15ad7cad71b423aa90cad39267493e84",
+        "question": "What can be uploaded to SAP Signavio Process Intelligence for investigations?",
+        "category": "D"
+    },
+    {
+        "correct_answers": [
+            "Extraction, Transform, Load"
+        ],
+        "wrong_answers": [
+            "Execute, Transform, Load",
+            "Extraction, Total, Load"
+        ],
+        "token": "5ad5731bc0058d58b00b0a12018c7154bf210947828ae73e6849cebc743bf0c1",
+        "question": "What does ETL stand for?",
+        "category": "E"
+    },
+    {
+        "correct_answers": [
+            "to group your data and display it as a bar chart",
+            "to create a group of your data and show it as a histogram",
+            "to sum all your data and display it as a bar chart"
+        ],
+        "wrong_answers": [
+            "to create a total number of your data"
+        ],
+        "token": "5c899606695e26da091f705fb3081994826d9888e19d0146c6de7f212b0d0dd2",
+        "question": "What is the Breakdown widget used for?",
+        "category": "D"
+    },
+    {
+        "correct_answers": [
+            "Main IT contact listed on your contract"
+        ],
+        "wrong_answers": [],
+        "token": "665ee18db0ab6a4eee013322a2801b74b269611f2e0d1c85478673a86dfd8a32",
+        "question": "Upon account setup, who is the default global account administrator?",
+        "category": "G"
+    },
+    {
+        "correct_answers": [
+            "Determines, where a process starts and ends from a data perspective"
+        ],
+        "wrong_answers": [
+            "Must be a combination of multiple ID's",
+            "Is optional but often quite useful"
+        ],
+        "token": "708723d7c833ce214f422b50a46e446dc1b1224a30c28639c4e8bfd1f7aa49e0",
+        "question": "What's true about case IDs?",
+        "category": "E"
+    },
+    {
+        "correct_answers": [
+            "Integration Management",
+            "Data Model Management",
+            "Data Source Management"
+        ],
+        "wrong_answers": [
+            "Data Object Management",
+            "Data Consistency Management"
+        ],
+        "token": "7fabf20721eae5417db96726cd4f851cdf2a4b5d57c55e6120ede01295e74082",
+        "question": "What are the 3 parts of SAP Signavio ETL?",
+        "category": "E"
+    },
+    {
+        "correct_answers": [
+            "Navigate through the value chain and process levels",
+            "Click on tasks and objects to get additional information",
+            "Identify all process where a certain role / department is responsible",
+            "Provide comments / feedback on process content"
+        ],
+        "wrong_answers": [
+            "Remove outdated process models",
+            "Edit tasks in a process model, if they are wrong"
+        ],
+        "token": "806b9528d950b202a32763613dcbd172882ab822b0e6dde4dfc309724fa2ed88",
+        "question": "What's possible for Hub users?",
+        "category": "B"
+    },
+    {
+        "correct_answers": [
+            "Known or unknown process inefficiencies",
+            "Insecurity of compliance and potential risks",
+            "Missing performance indicators and monitoring"
+        ],
+        "wrong_answers": [
+            "Missing process documentation (as process models)",
+            "Required process simulation capability"
+        ],
+        "token": "80ae04366a9d70066f1c00f09f57a802752529b84bb9a5cbdae6c6d24f86763a",
+        "question": "What are typical triggers for a process mining project?",
+        "category": "C"
+    },
+    {
+        "correct_answers": [
+            "False"
+        ],
+        "wrong_answers": [
+            "True"
+        ],
+        "token": "81623cea7ab2fa735ffc1c9a774b503a2e22794ebedeb76d6df1511e699dac99",
+        "question": "True or false? The SAP Signavio Process Collaboration Hub is mainly for process modelers.",
+        "category": "B"
+    },
+    {
+        "correct_answers": [
+            "Date functions",
+            "Aggregations",
+            "Math functions",
+            "Conditional functions",
+            "Sort"
+        ],
+        "wrong_answers": [
+            "SFEEL Expressions",
+            "JavaScript",
+            "Reporting functions",
+            "BPMN elements",
+            "Inner Join"
+        ],
+        "token": "8549c58e1831b3c420f8a19fea9590e2c1c7dd26a671227c36c949d237380959",
+        "question": "Which of the following are components of a SiGNAL query?",
+        "category": "F"
+    },
+    {
+        "correct_answers": [
+            "It focuses on getting a comprehensive insight into specific processes."
+        ],
+        "wrong_answers": [
+            "It focuses on the alignment and achievement of company goals.",
+            "It focuses on capturing additional information on processes and tasks."
+        ],
+        "token": "8fac9fa2416b2156d6f7ad3c7f17f2e350d2c11f402a85011faf29c89bfb4581",
+        "question": "There are 3 levels to focus on in Business Process Management (BPM). The strategic, operational, and technical level. What does the operational level focus on?",
+        "category": "A"
+    },
+    {
+        "correct_answers": [
+            "Step-by-step instructions on how to improve the identified inefficiency.",
+            "Impact on process performance when applying a given recommendation.",
+            "Relevance rating of a recommendation based on the usage of transactions or reports."
+        ],
+        "wrong_answers": [
+            "Determination of how common a certain correction is with others in your industry.",
+            "Identification of value drivers affected by improvement"
+        ],
+        "token": "90eb704b0afb33a518ebfa98dad352a6472c39a5e3a76180487e7487913d567f",
+        "question": "What are some of the capabilities of Correction Recommendations?",
+        "category": "H"
+    },
+    {
+        "correct_answers": [
+            "SAP Signavio Process Transformation Suite allows companies to understand, improve, and transform their business processes.",
+            "SAP Signavio Process Transformation Suite can be leveraged across SAP and non-SAP solutions."
+        ],
+        "wrong_answers": [
+            "SAP Signavio Process Transformation Suite is a hybrid process management platform, using cloud and on-premise technology.",
+            "SAP Signavio Process Transformation Suite is a platform to govern master data.",
+            "SAP Signavio Process Transformation Suite comprises three components."
+        ],
+        "token": "937120cc3f6a73f5fa784bbf598f6ae8c51da075534ce69a2bd38061c46e70db",
+        "question": "Which of the following statements describe SAP Signavio Process Transformation Suite correctly?",
+        "category": "H"
+    },
+    {
+        "correct_answers": [
+            "True"
+        ],
+        "wrong_answers": [
+            "False"
+        ],
+        "token": "9709af68c01f77db2d77de10b9d6560f9326488829ac805476188846c777780f",
+        "question": "A SiGNAL Metric is a packaged and editable SiGNAL statement to calculate and analyze metrics leading to business insights.",
+        "category": "F"
+    },
+    {
+        "correct_answers": [
+            "How-to guidance provided as documents.",
+            "Dictionary entries.",
+            "Documentation to further describe a task."
+        ],
+        "wrong_answers": [
+            "Reports created from a process diagram."
+        ],
+        "token": "9cc060f5f30b8919ce343f1463c09cbd9e19edbb4cf0580bec445d6ed9b4a710",
+        "question": "What are additional information you could access by clicking on elements of a process diagram?",
+        "category": "B"
+    },
+    {
+        "correct_answers": [
+            "True"
+        ],
+        "wrong_answers": [
+            "False"
+        ],
+        "token": "9d4752fce490d8a57113c2b2619b78e18f236c09057b8537e7e376f1c22c3fa9",
+        "question": "In this case study, the filters showed us that 367 items were incomplete in Department 0001.",
+        "category": "G"
+    },
+    {
+        "correct_answers": [
+            "Definition of target format"
+        ],
+        "wrong_answers": [
+            "Saving the converted data into a new file",
+            "Converting the extracted data"
+        ],
+        "token": "9ef1acb9f0c3a678b37885becbf97f941a3a70d479cadcdc4a148f2eba9b9295",
+        "question": "What's the first step in Data transformation?",
+        "category": "E"
+    },
+    {
+        "correct_answers": [
+            "Transform system (raw) data into actionable process insights"
+        ],
+        "wrong_answers": [
+            "Analyzing trends in a large set of data",
+            "Improve the process documentation"
+        ],
+        "token": "a0a9d331f29762c117207b2e15404d0f00c260c1dfd7f52d02be946f37aaac2e",
+        "question": "What is the goal of Process Mining?",
+        "category": "C"
+    },
+    {
+        "correct_answers": [
+            "It can check the number of transaction codes used on average for each process step and by company code and dive deeper into the analysis for one process step."
+        ],
+        "wrong_answers": [
+            "It can check the number of transaction codes used on average for one end-to-end process and dive deeper into the analysis per industry.",
+            "It can show the various ways processes are executed in reality across the entire organization or in a particular company code.",
+            "It can show the average ways processes are executed across the entire organization or in a particular company code."
+        ],
+        "token": "a35fe4f1cf9ab7a4accd2864b499949b6e58ad5a0b0d89d74fa5d42c293a1c1d",
+        "question": "What is a core capability of transaction code analysis?",
+        "category": "H"
+    },
+    {
+        "correct_answers": [
+            "Value chains are just one concept, which provides an entry point to business processes."
+        ],
+        "wrong_answers": [
+            "Value chains are the only concept which provides an entry point to business processes."
+        ],
+        "token": "a440a1cd92607770417f115b259a672a63dbc439c5b92c629c4d282e6218e639",
+        "question": "Which of the following statements is true?",
+        "category": "A"
+    },
+    {
+        "correct_answers": [
+            "Connect your SAP ERP applications",
+            "Obtain insights from your process",
+            "Analyze business inefficiencies"
+        ],
+        "wrong_answers": [
+            "Model your as-is processes"
+        ],
+        "token": "a7ce72461d599f2739a34c7c5766c3c346f5d12e6a689d69392240dd640f5909",
+        "question": "With Process Insights you can...",
+        "category": "G"
+    },
+    {
+        "correct_answers": [],
+        "wrong_answers": [],
+        "token": "ac79543f7c24051df54f4b038781750f49096dcd93a935ec919142eb4f5e4b06",
+        "question": "What information can be displayed with the Value widget?",
+        "category": "D"
+    },
+    {
+        "correct_answers": [
+            "SiGN = Signavio, A = Analytics, L = Language"
+        ],
+        "wrong_answers": [
+            "SiGN = Signaling, A = Analytics, L = Language",
+            "SiGN = Sign, A = Analytics, L = Language"
+        ],
+        "token": "ac84c75d93105cc0519b38ad0d12a535fd65b9852d5c4f37c8e5880e6770f17f",
+        "question": "What does SiGNAL mean?",
+        "category": "F"
+    },
+    {
+        "correct_answers": [
+            "Because the data needs to be linked to its specific case"
+        ],
+        "wrong_answers": [
+            "It's the only way a process mining system can upload the data",
+            "It's not possible to read if it hasn't been transformed"
+        ],
+        "token": "ad98b4d4093b7d1f7b5abdf3d3cb53216387318efba255fd92dae33f6220a97f",
+        "question": "Why does data need to be transformed?",
+        "category": "E"
+    },
+    {
+        "correct_answers": [
+            "Uses the SAP Signavio Process Intelligence API.",
+            "Handles data exchange between SAP Signavio Process Intelligence and the source system, which is not covered by standard connectors.",
+            "ETL scripts need to be configured and run externally."
+        ],
+        "wrong_answers": [
+            "Is part of the SAP Signavio ETL Data Pipeline."
+        ],
+        "token": "adeb9dd3a257005f36dd45a24c5b574a55aa7232a808fb1594d4fa370f9a0014",
+        "question": "What\u2019s true about the Standalone Connector?",
+        "category": "E"
+    },
+    {
+        "correct_answers": [
+            "The best-run score is an indicator showing to what extent the customer is running an effective process in the SAP system.",
+            "The metric is calculated based on the number of business documents being processed through steps that are considered best-run versus not best-run."
+        ],
+        "wrong_answers": [
+            "The metric is calculated based on the number of process steps required to complete a process. The variant with fewer process steps is considered best-run.",
+            "The best-run score is an indicator showing to what extent the customer is running effective processes across SAP and non-SAP systems.",
+            "The metric is calculated based on the number of process variants. The higher the amount of process variants, the lower the best-run score."
+        ],
+        "token": "afa96597e2eb70dbf5ca8c35d207cb1130c01b78e23f8f9687c73d0e5322bf60",
+        "question": "Which of the following statements describe the metric \u201cbest-run score\u201d?",
+        "category": "H"
+    },
+    {
+        "correct_answers": [
+            "To ensure they are uniformed and standardized."
+        ],
+        "wrong_answers": [
+            "To ensure they are correct."
+        ],
+        "token": "b3d1efb8446cf24de76aea85c82c2f7f0b6ddc500a71161999a89d8a602d6186",
+        "question": "Why does data need to be transformed?",
+        "category": "E"
+    },
+    {
+        "correct_answers": [
+            "Cases are grouped in variants",
+            "Cases are defined by a one-time execution of the process"
+        ],
+        "wrong_answers": [
+            "Unimportant cases don't need to have an ID",
+            "One case can reveal the critical path in a process"
+        ],
+        "token": "bbfe561fbf242dbc5a62da1217c6569742734f1930855ca24f74a6395a1e4ceb",
+        "question": "Which statements are correct about cases in process mining?",
+        "category": "C"
+    },
+    {
+        "correct_answers": [
+            "True"
+        ],
+        "wrong_answers": [
+            "False"
+        ],
+        "token": "bd99e7d8a3abaaa1ab6bf5590f2f163ba8e998ea6249b7505141614ccebb07fa",
+        "question": "These are the 4 steps for Onboarding: 1. Subscribe to the application, 2. Configure your identity provider, 3. Manage users, 4. Set up data collection.",
+        "category": "G"
+    },
+    {
+        "correct_answers": [
+            "Attribute: Case, Function: Count, Group by: City"
+        ],
+        "wrong_answers": [
+            "Attribute: City, Function: Min, Group by: Case",
+            "Attribute: Case, Function: Sum, Group by: City",
+            "Attribute: City, Function: AVG, Group by: Case"
+        ],
+        "token": "bdddd017729aaeb884ff4972ee2632d1b6bf92d8222b27d7bd378c5b26044097",
+        "question": "What do we need to do to create a Breakdown Chart of our orders by city?",
+        "category": "D"
+    },
+    {
+        "correct_answers": [
+            "Data Source Management",
+            "Integration Management",
+            "Data Model Management"
+        ],
+        "wrong_answers": [
+            "Source System",
+            "IT system"
+        ],
+        "token": "c0ccf76c146afa2bdd0c30140fedf3bf7fb50d3a57aa0729b7a41e2b689b9ff6",
+        "question": "What are the 3 ETL components that SAP Signavio uses to set up Data Pipelines?",
+        "category": "E"
+    },
+    {
+        "correct_answers": [
+            "The process does not consider departmental boundaries. It starts with the customer demand and ends with the fulfillment of the customer need, regardless how many departments are involved."
+        ],
+        "wrong_answers": [
+            "The process considers only one specific department. Hence, there must be multiple processes."
+        ],
+        "token": "c46b4eb89fda635afe917e8062602bfec6126bb3623584cbc908ef732a8de8a2",
+        "question": "What is true about End-to-End processes?",
+        "category": "A"
+    },
+    {
+        "correct_answers": [
+            "An analytical discipline to gain deep process understanding"
+        ],
+        "wrong_answers": [
+            "A synonym for Data Mining",
+            "A tool to analyze processes"
+        ],
+        "token": "c4f508922c5f6ac629fdad4b771064a5b1eb85d8e7178077c0f646574b52eef3",
+        "question": "Process Mining is\u2026",
+        "category": "C"
+    },
+    {
+        "correct_answers": [
+            "Process Performance"
+        ],
+        "wrong_answers": [
+            "Process Conformance",
+            "Process Discovery"
+        ],
+        "token": "ccd8f9788f530b9fed81c414f7e5f4bbc9d8783fed5f2e6a065ed146b8f69951",
+        "question": "To which capability does the following use case belong: Check if the overall revenue hits the target.",
+        "category": "C"
+    },
+    {
+        "correct_answers": [
+            "Case ID, event name identifier and event timestamps"
+        ],
+        "wrong_answers": [
+            "Case ID and event name identifier",
+            "Case ID and event timestamps",
+            "Event name identifier and event timestamps"
+        ],
+        "token": "cd718017b0eb365e26610c6592de10ce0b1a752f3bd898cd09e6d3d693df7122",
+        "question": "What must all cases have?",
+        "category": "E"
+    },
+    {
+        "correct_answers": [
+            "Assess process variants using lead times and blockers.",
+            "Identify the main process variants."
+        ],
+        "wrong_answers": [
+            "Get an overview of the various ways processes are executed across the entire organization or in a particular company code.",
+            "Select your preferred process variant to generate a BPMN model of this process."
+        ],
+        "token": "d20ce3b1fb2b5caca4d4bf4cfc8f09b768f4efdcdc03084ca9d04759f680f5db",
+        "question": "What are the core capabilities of Process Variant Analysis?",
+        "category": "H"
+    },
+    {
+        "correct_answers": [
+            "The switch from analog service offerings to remote/digital ones (e.g. remote consulting services or offering company related apps).",
+            "Documenting all processes to increase transparency",
+            "Using digital technologies and implementing a digital infrastructure to adapt to the global market and customer expectations."
+        ],
+        "wrong_answers": [
+            "Invest in a faster internet connection for the company work desks."
+        ],
+        "token": "de3c17c419cb27c2c381120f8421726f6923e65db1b7a3acf406ad5bf0dfcddf",
+        "question": "What does \u2018digital transformation\u2019 mean (for companies)?",
+        "category": "C"
+    },
+    {
+        "correct_answers": [
+            "Variant Explorer",
+            "Process Discovery"
+        ],
+        "wrong_answers": [
+            "Breakdown",
+            "Case Table",
+            "Distribution"
+        ],
+        "token": "e396070211d80b49212f8add47a1c865f040850cf8948d77b5541951eb5b8093",
+        "question": "What widgets can be used to identify the most executed path of a process?",
+        "category": "D"
+    },
+    {
+        "correct_answers": [
+            "Shows the process and its variants.",
+            "Shows the process as it is defined in the process model.",
+            "Shows the process flow of the actual data."
+        ],
+        "wrong_answers": [
+            "Shows the process and its variables."
+        ],
+        "token": "e3ebc8c8582ac63e28661c698c707b7c7a92499b2f92d2484b9218c00ad41335",
+        "question": "What's the capability of Process Conformance Widget?",
+        "category": "D"
+    },
+    {
+        "correct_answers": [
+            "An event log needs to contain the case ID, name and timestamp for each event"
+        ],
+        "wrong_answers": [
+            "An event log needs to contain only the name and timestamp for each event",
+            "The maximum number of events in a process is 50"
+        ],
+        "token": "e4f9dd19995d232ca6b0bb9563a6711c9606dcec65ed28499e7298a4b8c27a22",
+        "question": "Which statement is correct about events in process mining?",
+        "category": "C"
+    },
+    {
+        "correct_answers": [
+            "The recommended number of levels is between 3 and 5.",
+            "The number of levels is not fixed. They depend on the business structure of a company and their processes."
+        ],
+        "wrong_answers": [
+            "All processes in a value chain need to contain detailed subprocesses.",
+            "They always start with End-to-End processes."
+        ],
+        "token": "e7bc6bebf660cf6f407aa9f7a03de3eee8dbd5644d870f70c46e47455f30f6f7",
+        "question": "What is true about value chains?",
+        "category": "A"
+    },
+    {
+        "correct_answers": [
+            "Over time widget"
+        ],
+        "wrong_answers": [
+            "Distribution widget",
+            "Breakdown widget",
+            "Process discovery widget"
+        ],
+        "token": "ea4f603b2ab841614441065024a3665a8d6f15d327e430070a38a1d6f3b053f4",
+        "question": "\"In which month did we receive the most orders\"? Choose the right widget type to answer this question.",
+        "category": "D"
+    },
+    {
+        "correct_answers": [
+            "Develop measures to ensure conformance",
+            "Identify the total of nonconforming cases",
+            "Identify the root course of each case"
+        ],
+        "wrong_answers": [
+            "Find sales opportunities for new markets"
+        ],
+        "token": "f18c65c7289ae5a74c488a9a3f923bc0b5e1975d75b41af5df3520874685e657",
+        "question": "How does Process Conformance help companies?",
+        "category": "C"
+    },
+    {
+        "correct_answers": [
+            "Provide a central knowledge portal for the business processes of a company.",
+            "Provide feedback on processes (e.g. if content is outdated)."
+        ],
+        "wrong_answers": [
+            "Provide the option to print and archive processes."
+        ],
+        "token": "f6471299485a57c6ca4daeb222445048cfb58f07ef79e7902c2635c9a8f9b941",
+        "question": "What are some benefits of the SAP Signavio Process Collaboration Hub?",
+        "category": "B"
+    },
+    {
+        "correct_answers": [
+            "It provides actionable value potential, followed by recommendations, step-by-step guidance, and quick wins.",
+            "It creates awareness for the importance of process management and makes the topic accessible to all domains within an enterprise.",
+            "Only when continuously monitoring impact and detecting opportunities will the discovered potential identified by plug and gain become a reality. This, however, will take at least two years."
+        ],
+        "wrong_answers": [
+            "Plug and gain users can already leverage the entire SAP Signavio suite.",
+            "It is a detailed process mining project, which makes further process management activities obsolete. It is essentially both a starting point and an end point at the same time."
+        ],
+        "token": "f6b3c89485dc234d35c5d469e9951471a9884fb206a69b51391a361169e3c803",
+        "question": "Why is plug and gain the perfect starting point for organizations to initiate process management with SAP Signavio?",
+        "category": "H"
+    },
+    {
+        "correct_answers": [
+            "Assess process variants using lead times and blockers.",
+            "Identify the main process variant."
+        ],
+        "wrong_answers": [
+            "Select your preferred process variant to generate a BPMN model of this process.",
+            "Get an overview of the various ways processes are executed across the entire organization or in a particular company code."
+        ],
+        "token": "ff8cf49494d87c2ab042b8bf240a15d6a6cc86df1f4a5a7f11fee4ad4b2a3a13",
+        "question": "What are the core capabilities of Process Variant Analysis?",
+        "category": "H"
+    }
+]
