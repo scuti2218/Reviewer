@@ -1,17 +1,20 @@
 [
     {
-        "title" : "Classification 1",
-        "key" : "A",
-        "info" : "Class 1"
+        "title": "Classification 1",
+        "key": "A",
+        "info": "Class 1",
+        "token": "1103ed36fb7ecc545f6a7d1b9be9e9985f75fccf303792eef06278f0b9ca305b"
     },
     {
-        "title" : "Classification 2",
-        "key" : "B",
-        "info" : "Class 2"
+        "title": "Classification 2",
+        "key": "B",
+        "info": "Class 2",
+        "token": "7e2d5f86ab097209b909bd1fb14152aa485fac554358c42d9eed7c0fc3f89a02"
     },
     {
-        "title" : "Classification 3",
-        "key" : "C",
-        "info" : ""
+        "title": "Classification 3",
+        "key": "C",
+        "info": "",
+        "token": "0843137e72595bba50b99acc15c677cb576f4fd0b7f308597acb6c1a5d41eee4"
     }
 ]

@@ -1,74 +1,71 @@
-from .Prompt_Result import Prompt_Result, Prompt_Results
+from .Prompt_Result import Prompt_Result
 from typing import TypeVar
 TOptions = TypeVar('TOptions')
 
-
-# Only one answer
-def prompt(options: list[TOptions], trials: int = 3, input_text = "> "):
-    result = Prompt_Result[TOptions](None)
+def prompt(out_types = ["str", "int", "float", "char"], trials: int = 3, input_text = "> "):
+    result = Prompt_Result()
+    out_flag = [False for _ in out_types]
+    err_counts = 0
     for _ in range(trials):
-        temp: str = input(input_text).strip().capitalize()
-        if len(temp) != 1:
-            print(f"Give a valid answer!")
-            continue
-        answer_idx: int = ord(temp) - 65
-        if answer_idx in range(len(options)):
-            return result.configure(value = options[answer_idx], index = answer_idx)
-        else:
-            print(f"Prompt only from A to {chr(65 + len(options) - 1)}!")
-            continue
-    return result.configure(err_val = temp, crashed = True, message = f"Invalid answer {trials} times!")
-
-# Can have multiple answers        
-def prompt_multiple(options: list[TOptions], count_correct: int, trials: int = 3):
-    result = Prompt_Results[TOptions]()
-    print(f"Prompt {count_correct} answers:")
-    for i in range(count_correct):
-        prompt_result = prompt(options, trials, f"Answer #{i + 1}> ")
-        if prompt_result.crashed:
-            return result.configure(err_val = prompt_result.err_val, crashed = True, message = f"Invalid answer {trials} times!")
-        result.values.append(prompt_result.value)
-        result.indexes.append(prompt_result.index)
-    return result
-
-# Can prompt int
-def prompt_int(options: list[int], trials: int = 3, input_text = "> ") -> Prompt_Result[int]:
-    result = Prompt_Result[int](None)
-    for _ in range(trials):
-        try:
-            temp = input(input_text).strip()
-            answer_idx: int = int(temp)
-        except ValueError:
-            print(f"Give a valid answer!")
-            continue
-        else:
-            result.configure(value = options[answer_idx], index = answer_idx)
-    return result.configure(err_val = temp, crashed = True, message = f"Invalid answer {trials} times!")
-
-# Can prompt int or multiple choices
-def prompt_multiple_int(options: list[TOptions], count_correct: int, trials: int = 3):
-    result = Prompt_Results[TOptions]()
-    print(f"Prompt {count_correct} answers:")
-    for i in range(count_correct):
-        try:
-            temp = input(f"Answer #{i + 1}> ").strip().capitalize()
-            answer_idx: int = int(temp)
-            return Prompt_Result(None, -1, message = "int", err_val = answer_idx)
-        except ValueError:
-            if len(temp) != 1:
-                print(f"Give a valid answer!")
-                continue
-            
-            answer_idx: int = ord(temp) - 65
-            if answer_idx in range(len(options)):
-                prompt_result = result.configure(value = options[answer_idx], index = answer_idx, message = "obj")
-            else:
-                print(f"Prompt only from A to {chr(65 + len(options) - 1)}!")
-                continue
-            
-            result.values.append(prompt_result.value)
-            result.indexes.append(prompt_result.index)     
+        temp: str = input(input_text).strip()
+        if "str" in out_types:
+            result.value_string = temp
+            out_flag[out_types.index("str")] = True
+            result.out_types.append("str")
         
-    if len(result.indexes) != count_correct:
-        return result.configure(crashed = True, message = f"Invalid answer {trials} times!")
-    return result
+        if "char" in out_types and len(temp) == 1:
+            result.value_char = temp.capitalize()
+            out_flag[out_types.index("char")] = True
+            result.out_types.append("char")
+            
+        if any(out in out_types for out in ["float", "int"]):
+            try:
+                if "float" in out_types:
+                    result.value_float = float(temp)
+                    out_flag[out_types.index("float")] = True
+                    result.out_types.append("float")
+                
+                if "int" in out_types and (float(temp) == int(temp)):
+                    result.value_int = int(temp)
+                    out_flag[out_types.index("int")] = True
+                    result.out_types.append("int")
+            except:
+                pass
+        
+        if not any(out_flag):
+            err_counts += 1
+            print(f"Give a valid answer!")
+            continue
+        break
+        
+    if err_counts == trials:
+        result.crashed = True
+        
+    return result 
+
+def prompt_multiple(repeats: int = 1, out_types = ["str", "int", "float", "char"], trials: int = 3, input_text = "> "):
+    results: list[Prompt_Result] = []
+    print(f"Prompt {repeats} answers:")
+    for _ in range(repeats):
+        while True:
+            result_temp = prompt(out_types, trials, input_text)
+            if result_temp.crashed:
+                return result_temp
+            out = True
+            for result in results:
+                if all("str" in each_out_types for each_out_types in [out_types, result_temp.out_types, result.out_types]):
+                    out = out and result_temp.value_string != result.value_string
+                if all("int" in each_out_types for each_out_types in [out_types, result_temp.out_types, result.out_types]):
+                    out = out and result_temp.value_int != result.value_int
+                if all("float" in each_out_types for each_out_types in [out_types, result_temp.out_types, result.out_types]):
+                    out = out and result_temp.value_float != result.value_float
+                if all("char" in each_out_types for each_out_types in [out_types, result_temp.out_types, result.out_types]):
+                    out = out and result_temp.value_char != result.value_char
+                if not out:
+                    break
+            if not out:
+                print(f"Choose a different answer!")
+                continue
+            results.append(result_temp)
+            break
+    return Prompt_Result(results = results)

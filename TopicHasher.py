@@ -12,7 +12,7 @@ def get_json(filename: str):
 def set_json(filename: str, data: dict):
     script_dir = os.path.dirname(os.path.abspath(__file__))
     config_path = os.path.join(script_dir, filename + ".json")
-    with open(config_path, 'w') as f:
+    with open(config_path, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=4)
 
 def compute_token(**kwargs) -> str:
@@ -30,7 +30,7 @@ def make_token(name: str, **kwargs):
     
 def update_config_with_token(filename: str, *args: str):
     kwargs = get_dict(filename, *args)
-    make_token(filename, **kwargs)
+    kwargs = make_token(filename, **kwargs)
     set_json(filename, kwargs)
     
 def update_index_with_token(filename: str, *args: str):
@@ -39,6 +39,7 @@ def update_index_with_token(filename: str, *args: str):
     set_json(filename, result)
 
 if __name__ == "__main__":
-    # update_config_with_token("config", "title", "version")
+    update_config_with_token("config", "title", "version")
     # update_index_with_token("index", "question")
+    # update_index_with_token("categories", "key", "title")
     pass

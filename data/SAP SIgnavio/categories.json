@@ -1,47 +1,56 @@
 [
     {
-        "title" : "Business Process Management",
-        "key" : "A",
-        "info" : ""
+        "title": "SAP Signavio Process Collaboration Hub",
+        "info": "",
+        "key": "B",
+        "token": "22c3cfac1ece64e5058051181463805324adf9406543808bb05f1722a4cf7937"
     },
     {
-        "title" : "SAP Signavio Process Collaboration Hub",
-        "key" : "B",
-        "info" : ""
+        "title": "Unclassified",
+        "info": "",
+        "key": "Z",
+        "token": "3355da2f2b3b1cfc5e2411fe3c269c6dcf71a01e62c894acbb5373bd429100e7"
     },
     {
-        "title" : "Process Mining",
-        "key" : "C",
-        "info" : ""
+        "title": "SiGNAL",
+        "info": "",
+        "key": "F",
+        "token": "5bd08d47393c101abe3e3422b6bf1319d20f0b75206a1c98f9ced2ce8f7120ea"
     },
     {
-        "title" : "SAP Signavio Process Intelligence",
-        "key" : "D",
-        "info" : ""
+        "title": "SAP Signavio Process Insights",
+        "info": "",
+        "key": "G",
+        "token": "5c9ced043a031a2d3fcccedc35baadc2b673a5c4c65920eeb85c38974f95ebec"
     },
     {
-        "title" : "SAP Signavio Process Intelligence – Data Management and ETL",
-        "key" : "E",
-        "info" : ""
+        "title": "Plug and Gain",
+        "info": "",
+        "key": "H",
+        "token": "7d40ed30e6545022115457bfbff2e2f50e189ba480a18ab945a43009967c7d9f"
     },
     {
-        "title" : "SiGNAL",
-        "key" : "F",
-        "info" : ""
+        "title": "SAP Signavio Process Intelligence \u2013 Data Management and ETL",
+        "info": "",
+        "key": "E",
+        "token": "94b4bcff86e79ec35bbeb56ecef79a3911666d9700989c6b3c4bea706ca0e7f5"
     },
     {
-        "title" : "SAP Signavio Process Insights",
-        "key" : "G",
-        "info" : ""
+        "title": "SAP Signavio Process Intelligence",
+        "info": "",
+        "key": "D",
+        "token": "aee42aad9716252f94c579f87c49114e464be487c48f45536278ab475fc84386"
     },
     {
-        "title" : "Plug and Gain",
-        "key" : "H",
-        "info" : ""
+        "title": "Process Mining",
+        "info": "",
+        "key": "C",
+        "token": "deb7c5cc237cd22f447236b778c6493b8f5daf685cf754a61bb2a2508d464c9c"
     },
     {
-        "title" : "Unclassified",
-        "key" : "Z",
-        "info" : ""
+        "title": "Business Process Management",
+        "info": "",
+        "key": "A",
+        "token": "ec9451af62e883d56193836a5c8854e5b74828602d16efd6e31e6a6abe191ffd"
     }
 ]

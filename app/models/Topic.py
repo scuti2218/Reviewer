@@ -1,4 +1,5 @@
 from .ModelData import ModelData
+from .FirebaseModel import check_document
 
 class Topic(ModelData):
     def __init__(self, **kwargs):
@@ -10,4 +11,4 @@ class Topic(ModelData):
         return f"{self.title} : {self.info}"
     
     def check_token(self):
-        return True
+        return check_document(self.token)
