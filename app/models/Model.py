@@ -1,6 +1,17 @@
-class Model:
+from services import ExecutionOrder
+
+class Model(ExecutionOrder):
     def __init__(self):
-        pass
-    
+        super().__init__()
+        
     def initialize(self):
-        pass
+        super().initialize()
+        
+    def preupdate(self):
+        super().preupdate()
+        
+    def update(self):
+        super().update()
+        
+    def postupdate(self):
+        super().postupdate()

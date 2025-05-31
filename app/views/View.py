@@ -1,11 +1,36 @@
+from services import ExecutionOrder
 import tkinter as tk
 from .TkWidgets import TkButton
 
-class View:
+class View(ExecutionOrder):
+    # DEFAULT METHODS ====================================
     def __init__(self):
+        super().__init__()
         self.root = tk.Tk()
         self.buttons: dict[str, TkButton] = {}
         
+    def initialize(self):
+        super().initialize()
+        
+    def preupdate(self):
+        super().preupdate()
+        self.root.title("Tkinter Fullscreen Centered Window")
+        self.root.update_idletasks()
+        self.init_window()
+        
+    def update(self):
+        super().update()
+        frame = tk.Frame(self.root)
+        frame.place(relx=0.5, rely=0.5, anchor='center')
+        label = tk.Label(frame, text="Hello, World!")
+        label.pack()
+        
+    def postupdate(self):
+        super().postupdate()
+        self.update_buttons()
+        self.root.mainloop()
+        
+    # CUSTOM METHODS ====================================
     def init_window(self):
         screen_width = self.root.winfo_screenwidth()
         screen_height = self.root.winfo_screenheight()
@@ -22,27 +47,12 @@ class View:
         self.root.geometry(f'{window_width}x{window_height}+{x}+{y}')
         self.root.overrideredirect(False)
         
-    def initialize(self):
-        self.btn_create("sample", text='Stop', width=25)
+    # CREATE METHODS ====================================
+    def btn_create(self, key: str, **kwargs):
+        self.buttons[key] = TkButton(self.root, key, **kwargs)
         
-    def update(self):
-        self.root.title("Tkinter Fullscreen Centered Window")
-        self.root.update_idletasks()
-        self.init_window()
-        
-        frame = tk.Frame(self.root)
-        frame.place(relx=0.5, rely=0.5, anchor='center')
-        label = tk.Label(frame, text="Hello, World!")
-        label.pack()
-        
-        self.update_buttons()
-        print(self.buttons)
-        self.root.mainloop()
-        
+    # UPDATE METHODS ====================================
     def update_buttons(self):
         for tk_button in self.buttons.values():
             if tk_button.active:
                 tk_button.show()
-        
-    def btn_create(self, key: str, **kwargs):
-        self.buttons[key] = TkButton(self.root, key, **kwargs)
