@@ -1,75 +1,122 @@
-from tkinter import Widget, Tk, Button, Canvas, font as tkfont
-from typing import Generic, TypeVar, Type
+from tkinter import Widget, Tk, Canvas, font as tkfont
+from typing import Type
+from abc import abstractmethod
 
-# TkWidget =============================================================
-TWidget = TypeVar('TWidget', bound=Widget)
-class TkWidget(Generic[TWidget]):
-    def __init__(self, widget_class: Type[TWidget], root: Tk, key: str, **kwargs):
-        self.active = True
-        self.key = key
-        self.value: TWidget = widget_class(root, **kwargs)
+# TkObject =============================================================
+class TkObject:
+    def __init__(self, **kwargs):
+        self.init(**kwargs)
+        self.post_update()
+        
+    @abstractmethod
+    def init(self, **kwargs):
+        pass
     
-    def toggle(self):
-        self.active = not self.active
-        
-    def activate(self):
-        self.active = True
-        
-    def deactivate(self):
-        self.active = False
-        
-    def set_activate(self, active: bool):
-        self.active = active
+    def post_update(self):
+        pass
     
-    def show(self, *args, **kwargs):
-        self.value.pack(*args, **kwargs)
+    def get(self, key: str):
+        return self.__dict__.get(key, "")
+    
+    def set(self, **kwargs):
+        for key, value in kwargs:
+            if value == None or key not in self.__dict__.keys(): continue
+            self.__setattr__(key, value)
+        self.post_update()
+
+# TkColor =============================================================
+class TkColor(TkObject):
+    def init(self, **kwargs):
+        self.normal: str = kwargs.get("normal", "#efefef")
+        self.hover: str = kwargs.get("hover", "#c0c0c0")
+        self.active: str = kwargs.get("active", "#111111")
+            
+# TkOutline =============================================================
+class TkOutline(TkObject):
+    def init(self, **kwargs):
+        self.color: TkColor = TkColor( normal = kwargs.get("color_normal", "#111111"),
+                                       hover = kwargs.get("color_hover", "#111111"),
+                                       active = kwargs.get("color_active", "#111111") )
+        self.width: int = kwargs.get("width", 0)
+            
+# TkOutline =============================================================
+class TkDimension(TkObject):
+    def init(self, **kwargs):
+        self.width: int = kwargs.get("width", 0)
+        self.height: int = kwargs.get("height", 0)
+        self.radius: int = kwargs.get("radius", 0)
+        self.outline: int = kwargs.get("outline", 0)
+        self.post_update()
         
-    def configure(self, **kwargs):
-        self.value.configure(**kwargs)
-        
+    def post_update(self):
+        self.twidth: int = self.width + 2 * self.outline
+        self.theight: int = self.height + 2 * self.outline
+
+# RoundButton =============================================================
 class RoundButton(Canvas):
     def __init__(self, parent, **kwargs):
         # Defaults
-        font = kwargs.get('font', 10)
-        text = kwargs.get('text', '')
-        obj_font = tkfont.Font(size = font)
-        width = kwargs.get('width', obj_font.measure(text) + 20)
-        height = kwargs.get('height', obj_font.metrics('linespace') + 10)
-        command = kwargs.get('command', lambda *_: "")
-        color = kwargs.get('color', '#ffffff')
-        hover = kwargs.get('hover', "#e8e8e8")
-        zoom = kwargs.get('zoom', 5)
-        outline = kwargs.get('outline', '#000000')
-        outline_thickness = kwargs.get('outline_thickness', 2)
-        radius = kwargs.get('radius', 1)
-        radius = max(0, min(radius, 1.5 * outline_thickness))
+        groups = ["color", "font", "outline"]
+        defaults = {grp:{} for grp in groups }
+        for key, value in kwargs.items():
+            if any([key.startswith(grp+"_") for grp in groups]):
+                div = key.index("_")
+                grp = key[:div]
+                attr = key[div+1:]
+                defaults[grp][attr] = value
+        
+        self.text = kwargs.get('text', '')
+        self.font: tkfont.Font = tkfont.Font( **defaults["font"] )
+        self.color: TkColor = TkColor( **defaults["color"] )
+        self.outline = TkOutline( **defaults["outline"] )
+        self.dimension = TkDimension(
+            width = kwargs.get('width', self.font.measure(self.text) + 20),
+            height = kwargs.get('height', self.font.metrics('linespace') + 10),
+            radius = max(0, min(kwargs.get('radius', 1), 1.5 * self.outline.width)),
+            outline = kwargs.get('outline', 0)
+        )
+        self.command = kwargs.get('command', lambda *_: "")
         
         # WIDGET INITIALIZATION
-        total_width = width + 2 * outline_thickness
-        total_height = height + 2 * outline_thickness
-        super().__init__(parent, bg=parent['bg'], highlightthickness=0, width=total_width, height=total_height)
-        self.create_face((total_width, total_height), radius, outline_thickness, outline, color, text, font)
+        super().__init__(parent, bg=parent['bg'], highlightthickness=0, width=self.dimension.twidth, height=self.dimension.theight, cursor="hand2")
         
-        # MODIFICATION
-        self.bind('<Button-1>', lambda _: command)
-        self.bind('<Enter>', lambda e: self.create_face((total_width, total_height), radius, outline_thickness, outline, hover, text, font, zoom))
-        self.bind('<Leave>', lambda e: self.create_face((total_width, total_height), radius, outline_thickness, outline, color, text, font))
+        self.face_normal = lambda *_: self.create_face(self.color.normal, self.outline.color.normal)
+        self.face_hover = lambda *_: self.create_face(self.color.hover, self.outline.color.hover)
+        self.face_pressed = lambda *_: self.create_face(self.color.active, self.outline.color.active)
+        self.init_events()
+        
+        self.face_normal()
+    
+    def init_events(self):
+        self.bind('<Button-1>', self.on_click)
+        self.bind('<ButtonRelease-1>', self.on_release)
+        self.bind('<Enter>', self.face_hover)
+        self.bind('<Leave>', self.face_normal)
+
+    def on_click(self, event):
+        self.face_pressed()
+        
+    def on_release(self, event):
+        self.face_hover()
+        self.command()
         
     def configure(self, **kwargs):
         if "command" in kwargs.keys():
-            self.bind('<Button-1>', kwargs["command"])
+            self.command = kwargs["command"]
+            self.init_events()
             kwargs.pop("command")
         self.config(**kwargs)
         
-    def create_face(self, s: tuple[int, int], r, w, outline, color, text, font: int, adjustment: int = 0):
-        s = (s[0]+adjustment, s[1]+adjustment)
-        # font = max(1, int(min(s[1] * 0.5, s[0] / 6)))
+    def create_face(self, color: str, outline: str, adjustment: TkDimension = TkDimension()):
+        s = (self.dimension.twidth - adjustment.twidth, self.dimension.theight - adjustment.theight)
+        r = self.dimension.radius
+        w = self.outline.width
         
         self.config(width=s[0], height=s[1])
         self.delete('all')
         self.draw_face((0, 0), (s[0], s[1]), r, outline)
         self.draw_face((w, w), (s[0] - w, s[1] - w), r/3, color)
-        self.create_text(s[0]/2, s[1]/2, text=text, font=tkfont.Font(size = font))
+        self.create_text(s[0]/2, s[1]/2, text=self.text, font=self.font)
         
     def draw_face(self, a: tuple[int, int], b: tuple[int, int], width, color):
         x1, y1 = a
@@ -98,13 +145,24 @@ class RoundButton(Canvas):
         # OUTLINE MIDDLE
         xt = 0
         self.create_rectangle(x2-xt, y2-xt, x3+xt, y3+xt, fill=color, width=0) # vertical
-    
 
+# TkWidget ============================================================
+TWidget = Type[Widget]
+class TkWidget:
+    def __init__(self, widget_class: TWidget, root: Tk, **kwargs):
+        self.value: TWidget = widget_class(root, **kwargs)
+    
+    def show(self, *args, **kwargs):
+        self.value.pack(*args, **kwargs)
+        
+    def configure(self, **kwargs):
+        self.value.configure(**kwargs)
+        
 # TkButton =============================================================
-class TkButton(TkWidget[RoundButton]):
-    def __init__(self, root, key, **kwargs):
-        kwargs["text"] = kwargs.get("text", key)
-        super().__init__(RoundButton, root, key, **kwargs)
+TTkWidget = Type[TWidget]
+class TkButton(TkWidget):
+    def __init__(self, root: Tk, **kwargs):
+        super().__init__(RoundButton, root, **kwargs)
         
 # class TkButton(TkWidget[Button]):
 #     def __init__(self, root, key, **kwargs):

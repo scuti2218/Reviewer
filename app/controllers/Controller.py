@@ -22,21 +22,17 @@ class Controller:
         
         self.model.postupdate()
         self.view.postupdate()
-        
+    
     # DEFAULT METHODS ====================================
     def init_controller(self):
-        self.view.btn_create("sample", text="TRIALLSSS", width=180, height=70, outline_thickness=10, radius=25)
-        self.init_commands()
+        self.view.create_template("btn", "btn1", width=180, height=70, radius=25, outline_width=10)
         
-    # CUSTOM METHODS ====================================
-    def init_commands(self):
-        commands = { name[4:]:getattr(self, name)
-                    for name in dir(self)
-                    if name.startswith('cmd_')
-                    and callable(getattr(self, name)) }
-        for key, command in commands.items():
-            if key in self.view.buttons.keys():
-                self.view.buttons[key].configure(command=lambda *args: command(self, *args))
-    
-    def cmd_sample(self, *args):
+        self.view.create_by_template("btn1", "btn_sample", text="This button", command=self.cmd_btn_sample)
+        # self.view.create_button("btn_sample2", text="TRIALLSSS", width=180, height=70, outline_thickness=10, radius=25)
+        
+        print(self.view.widgets)
+        
+    def cmd_btn_sample(self, *args):
         print("sample")
+    def cmd_btn_sample2(self, *args):
+        print("heeyyyy")
