@@ -1,32 +1,5 @@
-## Reviewer
-Reviewer Program
+# Vue 3 + TypeScript + Vite
 
- ## Game Modes:
-- Limited: Reveal scores after all questions
-- Flashcard: Reveal score after each question
+This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
 
-## Choice Options:
-- Multiple Choice: Choose from sets of Answers
-- Enumeration: Write your answer/s
-
-## How to use:
-1. Download the ReviewerV0.1.0.exe
-2. Open the application to create the folder called "data" or create the folder manually
-3. Put topics inside the folder "data"
-3.1. You can try to use the sample topics in "data.zip"
-4. Have fun using the reviewer
-5. Leave a review and a suggestion!
-
-## More features soon:
-- Infinite Amount: Play as long as you like
-- Better UI instead of console
-- Bug Fixes
-- Classifications per question
-
-## What's Changed
-* First Build by @scuti2218 in https://github.com/scuti2218/Reviewer/pull/2
-
-## New Contributors
-* @scuti2218 made their first contribution in https://github.com/scuti2218/Reviewer/pull/2
-
-**Full Changelog**: https://github.com/scuti2218/Reviewer/commits/v0.1.0-alpha
+Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).

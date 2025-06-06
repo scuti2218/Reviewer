@@ -1,0 +1,27 @@
+{
+  "main": "electron/main.ts",
+  "name": "reviewer",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build-electron": "tsc --project tsconfig.electron.json",
+    "electron:dev": "concurrently \"vite\" \"wait-on http://localhost:5173 && npm run start-electron\"",
+    "start-electron": "npm run build-electron && electron ./dist-electron/main.js"
+  },
+  "dependencies": {
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.30",
+    "@vitejs/plugin-vue": "^5.2.3",
+    "@vue/tsconfig": "^0.7.0",
+    "concurrently": "^9.1.2",
+    "electron": "^36.4.0",
+    "typescript": "~5.8.3",
+    "vite": "^6.3.5",
+    "vue-tsc": "^2.2.8",
+    "wait-on": "^8.0.3"
+  }
+}
