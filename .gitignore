@@ -159,7 +159,9 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-
-*.bat
-
+# GOOGLE FIRESTORE DATABASE
 service-account.json
+
+# UTILITIES
+_bats
+_hidden

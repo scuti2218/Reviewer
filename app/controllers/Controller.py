@@ -27,12 +27,17 @@ class Controller:
     def init_controller(self):
         self.view.create_template("btn", "btn1", width=180, height=70, radius=25, outline_width=10)
         
-        self.view.create_by_template("btn1", "btn_sample", text="This button", command=self.cmd_btn_sample)
+        # self.fr_modes = 
+        
+        rdgrp1 = self.view.create_radio_group('rdgrp1')
+        self.view.create_by_template(self.view.root, "btn1", "mode1", text="Tournament", command=self.cmd_btn_sample1, radio_group=rdgrp1)
+        self.view.create_by_template(self.view.root, "btn1", "mode2", text="Quiz", command=self.cmd_btn_sample2, radio_group=rdgrp1)
+        self.view.create_by_template(self.view.root, "btn1", "mode3", text="Flashcard", command=self.cmd_btn_sample3, radio_group=rdgrp1)
         # self.view.create_button("btn_sample2", text="TRIALLSSS", width=180, height=70, outline_thickness=10, radius=25)
         
-        print(self.view.widgets)
-        
-    def cmd_btn_sample(self, *args):
-        print("sample")
+    def cmd_btn_sample1(self, *args):
+        print("sample1")
     def cmd_btn_sample2(self, *args):
-        print("heeyyyy")
+        print("sample2")
+    def cmd_btn_sample3(self, *args):
+        print("sample3")
