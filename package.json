@@ -8,7 +8,8 @@
     "build": "vite build",
     "build-electron": "tsc --project tsconfig.electron.json",
     "electron:dev": "concurrently \"vite\" \"wait-on http://localhost:5173 && npm run start-electron\"",
-    "start-electron": "npm run build-electron && electron ./dist-electron/main.js"
+    "start-electron": "npm run build-electron && electron ./dist-electron/main.js",
+    "edev" : "npm run electron:dev"
   },
   "dependencies": {
     "vue": "^3.5.13"
