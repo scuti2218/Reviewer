@@ -4,16 +4,23 @@ from .TkWidgets import TkButton, TTkWidget, TvarTkObject, TkGroup, TkRadioGroup
 
 class View(ExecutionOrder):
     # DEFAULT METHODS ====================================
+    widget_types: list[TTkWidget] = [TkButton, TkGroup]
+    root = tk.Tk()
+    @staticmethod
+    def get_widget_by_id(id: str):
+        for widget in View.widget_types:
+            if widget(View.root).widget_id == id:
+                return widget
+        return None
+        
     def __init__(self):
         super().__init__()
-        self.root = tk.Tk()
-        # templates: dict[id, TTkWidget]
-        self.widget_types: dict[str, TTkWidget] = {
-            "btn" : TkButton,
-            "grp" : TkGroup
-        }
-        # templates: dict[key, TTkWidget]
+        for widget in self.widget_types:
+            self.__setattr__(f"create_{widget(self.root).widget_id}", lambda parent, key, **kwargs: self.create_widget(widget, parent, key, **kwargs))
+        
+        # widgets: dict[key, TTkWidget]
         self.widgets: dict[str, TTkWidget] = {}
+        # objects: dict[key, TvarTkObject]
         self.objects: dict[str, TvarTkObject] = {}
         # templates: dict[name, tuple[TTkWidget, kwargs]]
         self.templates: dict[str, tuple[TTkWidget, dict]] = {}
@@ -58,31 +65,32 @@ class View(ExecutionOrder):
         
     # CREATE METHODS ====================================
     def create_template(self, id: str, name: str, **kwargs):
-        if id not in self.widget_types.keys(): return
-        ttkwidget: TTkWidget = self.widget_types[id]
+        ttkwidget = View.get_widget_by_id(id)
+        if not ttkwidget: return
         self.templates[name] = (ttkwidget, kwargs)
         
     def create_radio_group(self, key: str):
         self.objects[f"rdgrp_{key}"] = TkRadioGroup()
         return self.objects[f"rdgrp_{key}"]
         
-    def create_by_template(self, parent, name: str, key: str, **kwargs):
-        if name not in self.templates.keys(): return False
-        if key in self.widgets.keys(): return False
+    def create_by_template(self, name: str, parent: tk.Tk, key: str, **kwargs):
+        if name not in self.templates.keys(): return
+        if key in self.widgets.keys(): return
         kwargs = self.templates[name][1] | kwargs
-        self.create_widget(self.templates[name][0], parent, key, **kwargs)
+        return self.create_widget(self.templates[name][0], parent, key, **kwargs)
         
-    def create_widget(self, widget: TTkWidget, parent, key: str, **kwargs):
-        if key in self.widgets.keys(): return False
+    def create_widget(self, widget: TTkWidget, parent: tk.Tk, key: str, **kwargs):
+        if key in self.widgets.keys(): return
         self.widgets[key] = widget(parent, **kwargs)
+        return self.widgets[key]
         
-    def create_button(self, parent, key: str, **kwargs):
-        if key in self.widgets.keys(): return False
-        self.widgets[key] = TkButton(parent, **kwargs)
+    # def create_button(self, parent, key: str, **kwargs):
+    #     if key in self.widgets.keys(): return False
+    #     self.widgets[key] = TkButton(parent, **kwargs)
         
-    def create_group(self, parent, key: str, **kwargs):
-        if key in self.widgets.keys(): return False
-        self.widgets[key] = TkGroup(parent, **kwargs)
+    # def create_group(self, parent, key: str, **kwargs):
+    #     if key in self.widgets.keys(): return False
+    #     self.widgets[key] = TkGroup(parent, **kwargs)
         
     # UPDATE METHODS ====================================
     def update_buttons(self):

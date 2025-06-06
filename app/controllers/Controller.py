@@ -25,16 +25,16 @@ class Controller:
     
     # DEFAULT METHODS ====================================
     def init_controller(self):
-        self.view.create_template("btn", "btn1", width=180, height=70, radius=25, outline_width=10)
+        self.view.create_template("btn", "btn1", width=180, height=200, radius=25, outline_width=10)
+        self.view.create_template("grp", "grp1")
         
-        # self.fr_modes = 
+        self.grp_modes = self.view.create_by_template("grp1", self.view.root, "grp_modes")
         
         rdgrp1 = self.view.create_radio_group('rdgrp1')
-        self.view.create_by_template(self.view.root, "btn1", "mode1", text="Tournament", command=self.cmd_btn_sample1, radio_group=rdgrp1)
-        self.view.create_by_template(self.view.root, "btn1", "mode2", text="Quiz", command=self.cmd_btn_sample2, radio_group=rdgrp1)
-        self.view.create_by_template(self.view.root, "btn1", "mode3", text="Flashcard", command=self.cmd_btn_sample3, radio_group=rdgrp1)
-        self.view.create_by_template(self.view.root, "btn1", "mode4", text="CHECKBOX", command=self.cmd_btn_sample4, checkbox=True)
-        # self.view.create_button("btn_sample2", text="TRIALLSSS", width=180, height=70, outline_thickness=10, radius=25)
+        self.view.create_by_template("btn1", self.grp_modes.value, "mode1", text="Tournament", command=self.cmd_btn_sample1, radio_group=rdgrp1, pack_side="left", margin_x=20)
+        self.view.create_by_template("btn1", self.grp_modes.value, "mode2", text="Quiz", command=self.cmd_btn_sample2, radio_group=rdgrp1, pack_side="left", margin_x=20)
+        self.view.create_by_template("btn1", self.grp_modes.value, "mode3", text="Flashcard", command=self.cmd_btn_sample3, radio_group=rdgrp1, pack_side="right")
+        self.view.create_by_template("btn1", self.view.root, "mode4", text="CHECKBOX", command=self.cmd_btn_sample4, checkbox=True)
         
     def cmd_btn_sample1(self, *args):
         print("sample1")

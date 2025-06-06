@@ -137,6 +137,7 @@ class TkCanvas(Canvas):
     def __init__(self, parent, **kwargs):
         # Defaults
         defaults = self.get_kwargs(["color", "font", "outline"], kwargs)
+        self.children: list[TvarTkWidget] = kwargs.get("children", [])
         
         self.text = kwargs.get('text', '')
         self.font: tkfont.Font = tkfont.Font( **defaults["font"] )
@@ -210,6 +211,8 @@ class TkCanvas(Canvas):
         self.draw_face((0, 0), (s[0], s[1]), r, outline)
         self.draw_face((w, w), (s[0] - w, s[1] - w), r/3, color)
         self.create_text(s[0]/2, s[1]/2, text=self.text, font=self.font, fill=TkColor.get_contrasting_text_color(color))
+        for child in self.children:
+            self.create_window()
         self.config(width=s[0], height=s[1])
         self.dimension_postprocess()
 
@@ -291,10 +294,6 @@ class RoundButton(TkCanvas, TkRadioGroupData):
             self.face_hover()
             self.command.on_enter()
         
-        # if not (self.radio_group and self.selected) or (self.radio_group and not self.selected) or (self.checkbox and not self.selected):
-        #     self.face_hover()
-        #     self.command.on_enter()
-        
     def on_leave(self, _):
         if self.checkbox:
             if not self.selected:
@@ -307,9 +306,6 @@ class RoundButton(TkCanvas, TkRadioGroupData):
         else:
             self.face_normal()
             self.command.on_enter()
-        # if not (self.radio_group and self.selected) or (self.radio_group and not self.selected) or (self.checkbox and not self.selected):
-        #     self.face_normal()
-        #     self.command.on_leave()
 
 # TkWidget ============================================================
 TWidget = Type[Widget]
@@ -337,6 +333,7 @@ class TkWidget:
     def configure(self, **kwargs):
         self.value.configure(**kwargs)
 TTkWidget = Type[TkWidget]
+TvarTkWidget = TypeVar("TkWidget", bound=TkWidget)
         
 # TkButton =============================================================
 class TkButton(TkWidget):
