@@ -1,26 +1,33 @@
 import { app, BrowserWindow } from 'electron';
-import path from 'path';
+import { join } from 'path';
 import { fileURLToPath } from 'url';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-function createWindow() {
+import http from 'http';
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
+function waitForViteServer(url) {
+    return new Promise((resolve) => {
+        const timer = setInterval(() => {
+            http.get(url, () => {
+                clearInterval(timer);
+                resolve();
+            }).on('error', () => { });
+        }, 300);
+    });
+}
+app.whenReady().then(async () => {
     const win = new BrowserWindow({
         width: 800,
         height: 600,
-        webPreferences: {
-            preload: path.join(__dirname, 'preload.js'),
-        },
+        webPreferences: { nodeIntegration: true, contextIsolation: false },
     });
-    if (process.env.NODE_ENV === 'development') {
-        win.loadURL('http://localhost:5173');
+    const dev = !app.isPackaged;
+    const url = 'http://localhost:5173';
+    if (dev) {
+        await waitForViteServer(url);
+        win.loadURL(url);
     }
     else {
-        win.loadFile(path.join(__dirname, '../dist/index.html'));
+        win.loadFile(join(__dirname, '../dist/index.html'));
     }
-}
-app.whenReady().then(createWindow);
-app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin')
-        app.quit();
 });
-//# sourceMappingURL=main.js.map
+app.on('window-all-closed', () => { if (process.platform !== 'darwin')
+    app.quit(); });

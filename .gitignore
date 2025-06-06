@@ -23,10 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 
-# GOOGLE FIRESTORE DATABASE
-service-account.json
 
-# UTILITIES
+_app
 _bats
 _hidden
-_app

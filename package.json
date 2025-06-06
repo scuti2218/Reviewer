@@ -1,15 +1,16 @@
 {
-  "main": "electron/main.ts",
   "name": "reviewer",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
+  "main": "electron/main.js",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "build-electron": "tsc --project tsconfig.electron.json",
-    "electron:dev": "concurrently \"vite\" \"wait-on http://localhost:5173 && npm run start-electron\"",
-    "start-electron": "npm run build-electron && electron ./dist-electron/main.js",
-    "edev" : "npm run electron:dev"
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview",
+    "edev": "concurrently -k \"vite\" \"wait-on http://localhost:5173 && npm run electron:dev\"",
+    "electron:dev": "tsc --project tsconfig.electron.json && electron dist-electron/main.js",
+    "ebuild": "vite build && electron-builder"
   },
   "dependencies": {
     "vue": "^3.5.13"
@@ -20,9 +21,17 @@
     "@vue/tsconfig": "^0.7.0",
     "concurrently": "^9.1.2",
     "electron": "^36.4.0",
+    "electron-builder": "^26.0.12",
     "typescript": "~5.8.3",
     "vite": "^6.3.5",
     "vue-tsc": "^2.2.8",
     "wait-on": "^8.0.3"
+  },
+  "build": {
+    "appId": "com.example.reviewer",
+    "files": [
+      "dist",
+      "electron"
+    ]
   }
 }

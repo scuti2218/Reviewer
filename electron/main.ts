@@ -1,28 +1,38 @@
-import { app, BrowserWindow } from 'electron';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import { app, BrowserWindow } from 'electron'
+import { join } from 'path'
+import { fileURLToPath } from 'url'
+import { spawn } from 'child_process'
+import http from 'http'
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = fileURLToPath(new URL('.', import.meta.url))
 
-function createWindow() {
+function waitForViteServer(url: string) {
+  return new Promise<void>((resolve) => {
+    const timer = setInterval(() => {
+      http.get(url, () => {
+        clearInterval(timer)
+        resolve()
+      }).on('error', () => {})
+    }, 300)
+  })
+}
+
+app.whenReady().then(async () => {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
-    webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
-    },
-  });
+    webPreferences: { nodeIntegration: true, contextIsolation: false },
+  })
 
-  if (process.env.NODE_ENV === 'development') {
-    win.loadURL('http://localhost:5173');
+  const dev = !app.isPackaged
+  const url = 'http://localhost:5173'
+
+  if (dev) {
+    await waitForViteServer(url)
+    win.loadURL(url)
   } else {
-    win.loadFile(path.join(__dirname, '../dist/index.html'));
+    win.loadFile(join(__dirname, '../dist/index.html'))
   }
-}
+})
 
-app.whenReady().then(createWindow);
-
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit();
-});
+app.on('window-all-closed', () => { if (process.platform !== 'darwin') app.quit() })
