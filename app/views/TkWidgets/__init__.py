@@ -53,6 +53,21 @@ class TkOutline(TkObject):
                                        active = kwargs.get("color_active", "#111111") )
         self.width: int = kwargs.get("width", 0)
             
+# TkCommand =============================================================
+class TkCommand(TkObject):
+    def init(self, **kwargs):
+        self.on_select: str = kwargs.get("on_select", TkCommand.get_default())
+        self.on_enter: str = kwargs.get("on_enter", TkCommand.get_default())
+        self.on_leave: str = kwargs.get("on_leave", TkCommand.get_default())
+        self.on_click: str = kwargs.get("on_click", TkCommand.get_default())
+        self.on_release: str = kwargs.get("on_release", TkCommand.get_default())
+        
+    @staticmethod
+    def get_default():
+        return lambda *_: ""
+        
+        
+            
 # TkOutline =============================================================
 class TkDimension(TkObject):
     def init(self, **kwargs):
@@ -109,9 +124,7 @@ class TkRadioGroup(TkObject):
 
 # TkCanvas =============================================================
 class TkCanvas(Canvas):
-    def __init__(self, parent, **kwargs):
-        # Defaults
-        groups = ["color", "font", "outline"]
+    def get_kwargs(self, groups: list[str], kwargs: dict):
         defaults = {grp:{} for grp in groups }
         for key, value in kwargs.items():
             if any([key.startswith(grp+"_") for grp in groups]):
@@ -119,6 +132,11 @@ class TkCanvas(Canvas):
                 grp = key[:div]
                 attr = key[div+1:]
                 defaults[grp][attr] = value
+        return defaults
+    
+    def __init__(self, parent, **kwargs):
+        # Defaults
+        defaults = self.get_kwargs(["color", "font", "outline"], kwargs)
         
         self.text = kwargs.get('text', '')
         self.font: tkfont.Font = tkfont.Font( **defaults["font"] )
@@ -138,10 +156,14 @@ class TkCanvas(Canvas):
         )
         self.cursor = kwargs.get("cursor", "hand1")
         self.highlightthickness = kwargs.get("highlightthickness", 0)
-        self.face_normal = lambda *_: self.create_face(self.color.normal, self.outline.color.normal)
+        self.face_normal = lambda *_: self.__face_pressed()
         super().__init__(parent, bg=parent['bg'], width=self.dimension.twidth, height=self.dimension.theight, highlightthickness=self.highlightthickness, cursor=self.cursor)
         self.initialize(**kwargs)
         self.dimension_postprocess()
+        
+    def __face_pressed(self):
+        self.font.config(weight='normal')
+        self.create_face(self.color.normal, self.outline.color.normal)
     
     def dimension_postprocess(self):
         bbox = self.bbox("all")
@@ -150,9 +172,6 @@ class TkCanvas(Canvas):
         
     def initialize(self, **kwargs):
         pass
-        
-    def configure(self, **kwargs):
-        self.config(**kwargs)
         
     def draw_face(self, a: tuple[int, int], b: tuple[int, int], width, color):
         x1, y1 = a
@@ -203,26 +222,26 @@ class RoundButton(TkCanvas, TkRadioGroupData):
         TkRadioGroupData.__init__(self, id=id, **kwargs)
         TkCanvas.__init__(self, parent, cursor="hand2", **kwargs)
         RoundButton.registry.append(self)
-        
-    def configure(self, **kwargs):
-        if "command" in kwargs.keys():
-            self.command = kwargs["command"]
-            self.init_events()
-            kwargs.pop("command")
-        super().configure(**kwargs)
     
     def initialize(self, **kwargs):
-        self.command = kwargs.get('command', lambda *_: "")
-        self.checkbox = kwargs.get('checkbox', False)
+        if self.radio_group: self.radio_group.add(self)
+        self.checkbox = [kwargs.get('checkbox', False), False][self.radio_group != None]
         
-        if self.radio_group:
-            self.radio_group.add(self)
+        if "command" in kwargs.keys():
+            kwargs["command_on_select"] = kwargs["command"]
+            kwargs.pop("command")
+        defaults = self.get_kwargs(["command"], kwargs)
+        self.command = TkCommand(**defaults["command"])
         
         self.face_hover = lambda *_: self.create_face(self.color.hover, self.outline.color.hover)
-        self.face_pressed = lambda *_: self.create_face(self.color.active, self.outline.color.active)
+        self.face_pressed = lambda *_: self.__face_pressed()
         self.init_events()
         
         self.face_normal()
+        
+    def __face_pressed(self):
+        self.font.config(weight='bold')
+        self.create_face(self.color.active, self.outline.color.active)
 
     def init_events(self):
         self.bind('<Button-1>', self.on_click)
@@ -232,32 +251,65 @@ class RoundButton(TkCanvas, TkRadioGroupData):
         
     def on_radio_true(self):
         super().on_radio_true()
-        self.font.config(weight='bold')
         self.face_pressed()
     
     def on_radio_false(self):
         super().on_radio_false()
-        self.font.config(weight='normal')
         self.face_normal()
 
     def on_click(self, _):
         self.face_pressed()
+        self.command.on_click()
         
     def on_release(self, _):
-        if self.radio_group == None:
+        if self.checkbox:
+            self.selected = not self.selected
+            if self.selected:
+                self.face_pressed()
+                self.command.on_select()
+            else:
+                self.face_hover()
+        elif self.radio_group:
+            if not self.selected:
+                self.radio_group.activate(self.id)
+                self.command.on_select()
+        else:
             self.face_hover()
-            self.command()
-        elif not self.selected:
-            self.radio_group.activate(self.id)
-            self.command()
+            self.command.on_select()
+        self.command.on_release()
         
     def on_enter(self, _):
-        if self.radio_group == None or (self.radio_group != None and not self.selected):
+        if self.checkbox:
+            if not self.selected:
+                self.face_hover()
+                self.command.on_enter()
+        elif self.radio_group:
+            if not self.selected:
+                self.face_hover()
+                self.command.on_enter()
+        else:
             self.face_hover()
+            self.command.on_enter()
+        
+        # if not (self.radio_group and self.selected) or (self.radio_group and not self.selected) or (self.checkbox and not self.selected):
+        #     self.face_hover()
+        #     self.command.on_enter()
         
     def on_leave(self, _):
-        if self.radio_group == None or (self.radio_group != None and not self.selected):
+        if self.checkbox:
+            if not self.selected:
+                self.face_normal()
+                self.command.on_enter()
+        elif self.radio_group:
+            if not self.selected:
+                self.face_normal()
+                self.command.on_enter()
+        else:
             self.face_normal()
+            self.command.on_enter()
+        # if not (self.radio_group and self.selected) or (self.radio_group and not self.selected) or (self.checkbox and not self.selected):
+        #     self.face_normal()
+        #     self.command.on_leave()
 
 # TkWidget ============================================================
 TWidget = Type[Widget]
