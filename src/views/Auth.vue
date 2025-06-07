@@ -30,7 +30,8 @@
 <script setup lang="ts">
 import { Button } from "@/components";
 import { reactive } from "vue";
-const char_invisible = '\u200B';
+import EventChannel from "@/controllers/EventChannel";
+const char_invisible = "\u200B";
 
 interface IDescriptionData {
   title: string;
@@ -46,9 +47,9 @@ const descriptions: IDescriptionsContainer = {
   default: {
     title: "REVIEWER",
     details: [
-        "Welcome to the reviewer!",
-        char_invisible,
-        "Choose your type of authentication"
+      "Welcome to the reviewer!",
+      char_invisible,
+      "Choose your type of authentication",
     ],
   },
   anonymous: {
@@ -66,6 +67,7 @@ const descriptions: IDescriptionsContainer = {
 };
 
 interface IButtonData {
+  id: string,
   label: string;
   func: () => any;
   icon: string;
@@ -73,20 +75,23 @@ interface IButtonData {
 }
 const buttons: IButtonData[] = [
   {
+    id: "Anonymous",
     label: "Login as Anonymous",
-    func: () => console.log("Anonymous"),
+    func: () => EventChannel.emit("auth", { authType: "Anonymous" }),
     icon: "",
     desc: descriptions.anonymous,
   },
   {
+    id: "Guest",
     label: "Login as Guest",
-    func: () => console.log("Guest"),
+    func: () => EventChannel.emit("auth", { authType: "Guest" }),
     icon: "",
     desc: descriptions.guest,
   },
   {
+    id: "Google",
     label: "Login with Google",
-    func: () => console.log("Google"),
+    func: () => EventChannel.emit("auth", { authType: "Google" }),
     icon: "",
     desc: descriptions.google,
   },
@@ -167,9 +172,6 @@ const onMouseLeave = () => {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-
-    > .desc-detail {
-    }
   }
 }
 </style>

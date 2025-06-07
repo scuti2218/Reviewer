@@ -14,13 +14,21 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount, ref } from "vue";
+import { onBeforeMount, onMounted, ref } from "vue";
 import Auth from "@views/Auth.vue";
 import { currentUser } from "@controllers/firebase/auth";
+import EventChannel from "@/controllers/EventChannel";
 
 const authLoggedIn = ref(false);
 onBeforeMount(() => {
   authLoggedIn.value = !!currentUser();
+});
+
+onMounted(async () => {
+  EventChannel.on("auth", (data) => {
+    authLoggedIn.value = true;
+    console.log("Got data:", data);
+  });
 });
 </script>
 
