@@ -3,7 +3,7 @@
   <button @click="routeTo('/Sample')">Go to Sample</button>
 </template>
 <script setup lang="ts">
-import { useRouteTo } from "@/utils/router";
+import { useRouteTo } from "@composables/router";
 const routeTo = useRouteTo()
 </script>
 <style scoped>
