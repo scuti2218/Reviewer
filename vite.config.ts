@@ -6,7 +6,6 @@ const folders = [
   '',
   'assets',
   'components',
-  'composables',
   'controllers',
   'models',
   'router',
