@@ -1,6 +1,6 @@
 import { reactive, watch } from 'vue'
 
-export function usePersistentState<T extends object>(key: string, defaults: T) {
+export function usePersistentData<T extends object>(key: string, defaults: T) {
   const saved = localStorage.getItem(key)
   const state = reactive(saved ? JSON.parse(saved) : defaults) as T
 
@@ -11,6 +11,6 @@ export function usePersistentState<T extends object>(key: string, defaults: T) {
   return state
 }
 
-export const resetState = (state: object, defaultState: object) => {
+export const resetPersistentData = (state: object, defaultState: object) => {
   Object.assign(state, JSON.parse(JSON.stringify(defaultState)))
 }

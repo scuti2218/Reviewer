@@ -1,9 +1,10 @@
 <template>
   <main v-show="state.initDone">
-    <section v-if="state.authLoggedIn">
+    <span>isOnline = {{ state.isOnline }}</span>
+    <section v-if="persistentData.auth.loggedIn">
       <header>
         <nav>
-          {{ state.authData.authUsername }}
+          <span>{{ persistentData.auth.name }}</span>
           <button @click="cmdLogout">logout</button>
         </nav>
       </header>
@@ -17,62 +18,88 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount, onMounted } from "vue";
+import { onBeforeMount, onMounted, reactive } from "vue";
 import Auth from "@views/Auth.vue";
 import {
   onFirebaseInitialize,
-  EAuthType,
   IAuthData,
   AuthChannel,
   defaultAuthData,
+  EAuthType,
+  loginAnonymous,
+  loginWithGoogle,
 } from "@/controllers/auth";
-import { User } from "firebase/auth";
 import { logout } from "@/controllers/auth";
 import {
-  usePersistentState,
-  resetState,
-} from "./controllers/usePersistentState";
+  usePersistentData,
+  resetPersistentData,
+} from "./controllers/usePersistentData";
+import { User } from "firebase/auth";
+import {
+  FirebaseConnectivityChannel,
+  useFirebaseConnection,
+} from "./controllers/useFirebaseConnection";
 
 const defaultState = {
   initFirebase: false as boolean,
-  initDone: false as boolean,
-
   initAuth: false as boolean,
-  authData: defaultAuthData as IAuthData,
-
-  authLoggedIn: false as boolean,
+  initDone: false as boolean,
+  isOnline: false as boolean,
 };
-const state = usePersistentState("app-state", defaultState);
+const state = reactive(defaultState);
+const persistentData = usePersistentData("app-persistentData", {
+  auth: defaultAuthData as IAuthData,
+});
 
-const onInitAuth = (user: User | null) => {
-  state.authData.authUser = user;
+const onInitAuth = async (user: User | null) => {
+  if (!!persistentData.auth.loggedIn === !!user) return true;
+
   if (!!user) {
-    state.authData.authType = EAuthType.Google;
-    state.authData.authUsername = user.displayName ?? "";
-    state.authLoggedIn = true;
+    resetPersistentData(persistentData, defaultAuthData);
+    return true;
   }
+
+  const login = () =>
+    persistentData.auth.type == EAuthType.Google
+      ? loginWithGoogle(false)
+      : loginAnonymous();
+  return login().then(() => true);
 };
 
 onBeforeMount(() => {
-  onFirebaseInitialize().then((user: User | null) => {
-    state.initFirebase = true;
-    onInitAuth(user);
-    state.initAuth = true;
-    state.initDone = true;
-  });
+  useFirebaseConnection();
+  FirebaseConnectivityChannel.listen((data: boolean) => {
+    state.isOnline = data;
+  }, "transmit");
+  FirebaseConnectivityChannel.listen(
+    () =>
+      FirebaseConnectivityChannel.transmit(state.isOnline, "request-feedback"),
+    "request"
+  );
+
+  onFirebaseInitialize()
+    .then((user: User | null) => {
+      state.initFirebase = true;
+      return onInitAuth(user);
+    })
+    .then(() => {
+      state.initAuth = true;
+      state.initDone = [state.initFirebase, state.initAuth].every(Boolean);
+    });
 });
 
 onMounted(async () => {
   AuthChannel.listen((data: IAuthData) => {
-    state.authData = data;
-    state.authLoggedIn = true;
+    persistentData.auth = data;
   });
 });
 
-const cmdLogout = () => {
-  resetState(state, defaultState);
-  logout().then(() => window.location.reload());
-};
+const cmdLogout = () =>
+  logout().finally(() => {
+    resetPersistentData(persistentData.auth, defaultAuthData);
+    Object.assign(state, defaultState);
+    FirebaseConnectivityChannel.transmit(state.isOnline, "request-feedback");
+  });
 </script>
 
 <style scoped>

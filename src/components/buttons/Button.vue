@@ -1,5 +1,5 @@
 <template>
-  <button class="button">
+  <button class="button" :disabled="!!disabled">
     <span class="icon" v-if="(!!slots.icon || !!icon) && !hideIcon">
       <slot name="icon" />
       {{ !slots.icon ? icon : "" }}
@@ -24,6 +24,7 @@ defineProps({
   hideIcon: Boolean,
   hideLabel: Boolean,
   hideDefault: Boolean,
+  disabled: Boolean,
 });
 
 const slots = useSlots();

@@ -1,23 +1,31 @@
 <template>
   <section id="vw_auth">
-    <section class="vw_auth-container">
-      <section class="vw_auth-buttons" @mouseleave="onMouseLeave">
+    <section
+      class="vw_auth-container vw_auth-auth_message"
+      v-show="state.authenticating"
+    >
+      <span>Please wait while we try to log you in</span>
+    </section>
+    <section class="vw_auth-container" v-show="!state.authenticating">
+      <section class="vw_auth-buttons" @mouseleave="cmdMouseLeave">
         <Button
-          v-for="button in buttons"
-          :label="button.label"
-          :icon="button.icon"
-          @click="button.callback"
-          @mouseenter="onMouseEnter(button.desc)"
+          v-for="description in Object.values(descriptions)"
+          v-show="description.isButton"
+          :label="description.info.title"
+          :icon="description.info.icon"
+          @click="cmdClick(description.info.callback)"
+          @mouseenter="cmdMouseEnter(description)"
+          :disabled="description.info.params?.disableOnOffline(state.isOnline)"
         />
       </section>
     </section>
-    <section class="vw_auth-container">
+    <section class="vw_auth-container" v-show="!state.authenticating">
       <section class="vw_auth-sidebar">
-        <span class="desc-title">{{ states.description.title }}</span>
+        <span class="desc-title">{{ state.description.info.title }}</span>
         <div class="desc-details">
           <span
             class="desc-detail"
-            v-for="detail in states.description.details"
+            v-for="detail in state.description.info.details"
             >{{ detail }}</span
           >
         </div>
@@ -28,104 +36,70 @@
 
 <script setup lang="ts">
 import { Button } from "@/components";
-import { reactive } from "vue";
-import { login } from "@/controllers/auth";
-import { EAuthType, AuthChannel } from "@/controllers/auth";
-const char_invisible = "\u200B";
+import { onBeforeMount, onMounted, reactive } from "vue";
+import { AuthTypeContainerInfo, AuthTypeInfo } from "@/controllers/auth";
+import { FirebaseConnectivityChannel } from "@/controllers/useFirebaseConnection";
 
-interface IDescriptionData {
-  title: string;
-  details: string[];
-}
-interface IDescriptionsContainer {
-  default: IDescriptionData;
-  anonymous: IDescriptionData;
-  guest: IDescriptionData;
-  google: IDescriptionData;
-}
-const descriptions: IDescriptionsContainer = {
-  default: {
+// DESCRIPTION PREPARATION
+const char_invisible = "\u200B";
+type TDescriptions = {
+  isButton: boolean;
+  info: AuthTypeInfo;
+};
+const descriptions = Object.entries(AuthTypeContainerInfo).reduce(
+  (acc, [key, info]) => {
+    acc[key] = { isButton: true, info };
+    return acc;
+  },
+  {} as Record<string, TDescriptions>
+);
+descriptions["default"] = {
+  isButton: false,
+  info: {
     title: "REVIEWER",
     details: [
-      "Welcome to the reviewer!",
+      "Welcome to Reviewer App",
       char_invisible,
-      "Choose your type of authentication",
+      "Please choose your authentication type.",
     ],
-  },
-  anonymous: {
-    title: "Login as Anonymous",
-    details: [],
-  },
-  guest: {
-    title: "Login as Guest",
-    details: [],
-  },
-  google: {
-    title: "Login with Google",
-    details: [],
+    callback: async () => {},
   },
 };
+const cmdMouseEnter = (desc: TDescriptions) => {
+  state.description = desc;
+};
+const cmdMouseLeave = () => {
+  state.description = descriptions.default;
+};
+const cmdClick = (callback: () => Promise<any>) => {
+  state.authenticating = true;
+  callback().catch(() => {
+    state.authenticating = false;
+  });
+};
 
-interface IButtonData {
-  id: string;
-  label: string;
-  callback: () => any;
-  icon: string;
-  desc: IDescriptionData;
-}
-const buttons: IButtonData[] = [
-  {
-    id: EAuthType.Anonymous,
-    label: "Login as Anonymous",
-    callback: () => {
-      AuthChannel.transmit({
-        authType: EAuthType.Anonymous,
-        authUser: null,
-        authUsername: EAuthType.Anonymous,
-      });
-    },
-    icon: "",
-    desc: descriptions.anonymous,
-  },
-  {
-    id: EAuthType.Guest,
-    label: "Login as Guest",
-    callback: () => {
-      AuthChannel.transmit({
-        authType: EAuthType.Guest,
-        authUser: null,
-        authUsername: EAuthType.Guest,
-      });
-    },
-    icon: "",
-    desc: descriptions.guest,
-  },
-  {
-    id: EAuthType.Google,
-    label: "Login with Google",
-    callback: () => {
-      login().then((result) => {
-        AuthChannel.transmit({
-          authType: EAuthType.Google,
-          authUser: result.user,
-          authUsername: result.user.displayName ?? EAuthType.Google,
-        });
-      });
-    },
-    icon: "",
-    desc: descriptions.google,
-  },
-];
-
-const states = reactive({
-  description: descriptions.default,
+// STATES
+const state = reactive({
+  description: descriptions.default as TDescriptions,
+  authenticating: false as boolean,
+  isOnline: false as boolean,
+  initNetwork: false as boolean,
 });
-const onMouseEnter = (desc: IDescriptionData) => {
-  states.description = desc;
-};
-const onMouseLeave = () => {
-  states.description = descriptions.default;
-};
+
+onBeforeMount(() => {
+  FirebaseConnectivityChannel.listen(
+    (data: boolean) => {
+      state.isOnline = data;
+      state.initNetwork = true;
+    },
+    "transmit",
+    "request-feedback"
+  );
+});
+
+onMounted(() => {
+  if (!state.initNetwork) FirebaseConnectivityChannel.transmit(true, "request");
+});
 </script>
 
 <style scoped>
@@ -152,6 +126,10 @@ const onMouseLeave = () => {
     background-color: var(--color-quaternary);
     outline: 6px solid var(--color-secondary);
   }
+}
+
+.vw_auth-auth_message {
+  flex: 1;
 }
 
 .vw_auth-buttons {

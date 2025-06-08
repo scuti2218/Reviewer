@@ -1,18 +1,30 @@
 class EventChannel {
   private target = new EventTarget();
 
-  on(event: string, callback: (payload: any) => void) {
+  on(event: string, callback: (data: any) => void, ...filterPorts: string[]) {
     this.target.addEventListener(event, (e: Event) => {
-      callback((e as CustomEvent).detail);
+      const payload = (e as CustomEvent).detail;
+      const targetPort = payload?.port;
+
+      if (
+        !!targetPort &&
+        filterPorts.length > 0 &&
+        !filterPorts.includes(targetPort)
+      )
+        return;
+      const data = payload?.data;
+      callback(data);
     });
   }
 
-  off(event: string, callback?: (payload: any) => void) {
+  off(event: string, callback?: (data: any) => void) {
     this.target.removeEventListener(event, callback as EventListener);
   }
 
-  emit(event: string, payload?: any) {
-    this.target.dispatchEvent(new CustomEvent(event, { detail: payload }));
+  emit(event: string, data?: any, port?: string) {
+    this.target.dispatchEvent(
+      new CustomEvent(event, { detail: { data, port } })
+    );
   }
 }
 export default new EventChannel();
@@ -24,9 +36,10 @@ export class EventRadio<TData> {
     this.channel = channel;
   }
 
-  transmit = (data: TData) => this.eventChannel.emit(this.channel, data);
-  listen = (callback: (data: TData) => void) =>
-    this.eventChannel.on(this.channel, callback);
+  transmit = (data: TData, targetPort?: string) =>
+    this.eventChannel.emit(this.channel, data, targetPort);
+  listen = (callback: (data: TData) => void, ...filterPorts: string[]) =>
+    this.eventChannel.on(this.channel, callback, ...filterPorts);
   disconnect = (callback?: (data: TData) => void) =>
     this.eventChannel.off(this.channel, callback);
 }
