@@ -1,14 +1,13 @@
 <template>
   <section id="vw_auth">
     <section class="vw_auth-container">
-      <section class="vw_auth-buttons">
+      <section class="vw_auth-buttons" @mouseleave="onMouseLeave">
         <Button
           v-for="button in buttons"
           :label="button.label"
           :icon="button.icon"
-          @click="button.func"
+          @click="button.callback"
           @mouseenter="onMouseEnter(button.desc)"
-          @mouseleave="onMouseLeave"
         />
       </section>
     </section>
@@ -30,7 +29,8 @@
 <script setup lang="ts">
 import { Button } from "@/components";
 import { reactive } from "vue";
-import EventChannel from "@/controllers/EventChannel";
+import { login } from "@/controllers/auth";
+import { EAuthType, AuthChannel } from "@/controllers/auth";
 const char_invisible = "\u200B";
 
 interface IDescriptionData {
@@ -67,31 +67,51 @@ const descriptions: IDescriptionsContainer = {
 };
 
 interface IButtonData {
-  id: string,
+  id: string;
   label: string;
-  func: () => any;
+  callback: () => any;
   icon: string;
   desc: IDescriptionData;
 }
 const buttons: IButtonData[] = [
   {
-    id: "Anonymous",
+    id: EAuthType.Anonymous,
     label: "Login as Anonymous",
-    func: () => EventChannel.emit("auth", { authType: "Anonymous" }),
+    callback: () => {
+      AuthChannel.transmit({
+        authType: EAuthType.Anonymous,
+        authUser: null,
+        authUsername: EAuthType.Anonymous,
+      });
+    },
     icon: "",
     desc: descriptions.anonymous,
   },
   {
-    id: "Guest",
+    id: EAuthType.Guest,
     label: "Login as Guest",
-    func: () => EventChannel.emit("auth", { authType: "Guest" }),
+    callback: () => {
+      AuthChannel.transmit({
+        authType: EAuthType.Guest,
+        authUser: null,
+        authUsername: EAuthType.Guest,
+      });
+    },
     icon: "",
     desc: descriptions.guest,
   },
   {
-    id: "Google",
+    id: EAuthType.Google,
     label: "Login with Google",
-    func: () => EventChannel.emit("auth", { authType: "Google" }),
+    callback: () => {
+      login().then((result) => {
+        AuthChannel.transmit({
+          authType: EAuthType.Google,
+          authUser: result.user,
+          authUsername: result.user.displayName ?? EAuthType.Google,
+        });
+      });
+    },
     icon: "",
     desc: descriptions.google,
   },

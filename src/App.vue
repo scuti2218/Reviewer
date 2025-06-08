@@ -1,8 +1,11 @@
 <template>
-  <main>
-    <section v-if="authLoggedIn">
+  <main v-show="state.initDone">
+    <section v-if="state.authLoggedIn">
       <header>
-        <nav></nav>
+        <nav>
+          {{ state.authData.authUsername }}
+          <button @click="cmdLogout">logout</button>
+        </nav>
       </header>
       <router-view />
       <footer></footer>
@@ -14,22 +17,62 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount, onMounted, ref } from "vue";
+import { onBeforeMount, onMounted } from "vue";
 import Auth from "@views/Auth.vue";
-import { currentUser } from "@controllers/firebase/auth";
-import EventChannel from "@/controllers/EventChannel";
+import {
+  onFirebaseInitialize,
+  EAuthType,
+  IAuthData,
+  AuthChannel,
+  defaultAuthData,
+} from "@/controllers/auth";
+import { User } from "firebase/auth";
+import { logout } from "@/controllers/auth";
+import {
+  usePersistentState,
+  resetState,
+} from "./controllers/usePersistentState";
 
-const authLoggedIn = ref(false);
+const defaultState = {
+  initFirebase: false as boolean,
+  initDone: false as boolean,
+
+  initAuth: false as boolean,
+  authData: defaultAuthData as IAuthData,
+
+  authLoggedIn: false as boolean,
+};
+const state = usePersistentState("app-state", defaultState);
+
+const onInitAuth = (user: User | null) => {
+  state.authData.authUser = user;
+  if (!!user) {
+    state.authData.authType = EAuthType.Google;
+    state.authData.authUsername = user.displayName ?? "";
+    state.authLoggedIn = true;
+  }
+};
+
 onBeforeMount(() => {
-  authLoggedIn.value = !!currentUser();
+  onFirebaseInitialize().then((user: User | null) => {
+    state.initFirebase = true;
+    onInitAuth(user);
+    state.initAuth = true;
+    state.initDone = true;
+  });
 });
 
 onMounted(async () => {
-  EventChannel.on("auth", (data) => {
-    authLoggedIn.value = true;
-    console.log("Got data:", data);
+  AuthChannel.listen((data: IAuthData) => {
+    state.authData = data;
+    state.authLoggedIn = true;
   });
 });
+
+const cmdLogout = () => {
+  resetState(state, defaultState);
+  logout().then(() => window.location.reload());
+};
 </script>
 
 <style scoped>

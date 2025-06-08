@@ -5,7 +5,7 @@
   </section>
 </template>
 <script setup lang="ts">
-import { useRouteTo } from "@composables/router";
+import { useRouteTo } from "@/controllers/router";
 const routeTo = useRouteTo();
 </script>
 <style scoped></style>
