@@ -15,8 +15,9 @@
   --padding-main-left: 30px;
   --padding-main-right: 30px;
   --padding-main-inline: var(--padding-main-left) var(--padding-main-right);
-  
-  --padding-main: var(--padding-main-top) var(--padding-main-right) var(--padding-main-bottom) var(--padding-main-left);
+
+  --padding-main: var(--padding-main-top) var(--padding-main-right)
+    var(--padding-main-bottom) var(--padding-main-left);
 }
 
 body {
@@ -27,6 +28,23 @@ body {
 }
 
 #app {
+  min-width: 320px;
   height: 100vh;
   text-align: center;
+}
+
+.box-shadow {
+  box-shadow: 0 10px 0 rgba(0, 0, 0, 0.3);
+}
+.box-shadow-light {
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.outline-black {
+  outline: 2px solid var(--bs-dark);
+}
+
+.blend-text-to-bg {
+  mix-blend-mode: difference;
+  color: white;
 }

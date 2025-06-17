@@ -1,13 +1,29 @@
 <template>
-  <main>
-    <Splashart v-if="!state.initDone" @done="onSplashartDone" />
-    <Auth v-else-if="!persistentData.auth.loggedIn" />
-    <PageWrapper v-else />
-  </main>
+  <BOverlay id="vw_app-overlay-cover" :show="state.showOverlay" rounded="sm">
+    <main>
+      <Splashart v-if="!state.initDone" @done="onSplashartDone" />
+      <Auth v-else-if="!persistentData.auth.loggedIn" />
+      <PageWrapper v-else />
+      <BAlert
+        v-model="state.cdValueDismissableAlert"
+        dismissible
+        fade
+        @close-countdown="state.cdMaxDismissableAlert = $event"
+        id="vw_app-dismissable-alert"
+      >
+        {{ state.messageDismissableAlert }} <b>&rArr;</b>
+        <BProgress
+          striped
+          :value="progress"
+          height="6px"
+        />
+      </BAlert>
+    </main>
+  </BOverlay>
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount, onMounted, reactive, watch } from "vue";
+import { computed, onBeforeMount, onMounted, reactive, watch } from "vue";
 import { Auth, Splashart, PageWrapper } from "@/views";
 import { User } from "firebase/auth";
 import {
@@ -26,6 +42,7 @@ import {
   useFirebaseConnection,
 } from "@controllers/useFirebaseConnection";
 import { usePersistentData } from "@controllers/usePersistentData";
+import { overlayCoverChannel, dismissableAlertChannel } from "@/controllers";
 
 // DATA: STATE
 const defaultState = {
@@ -34,7 +51,17 @@ const defaultState = {
   initAuth: false as boolean,
   initDone: false as boolean,
   isOnline: false as boolean,
+  showOverlay: false as boolean,
+  showDismissableAlert: false as boolean,
+  messageDismissableAlert: "" as string,
+  cdMaxDismissableAlert: 5000 as number,
+  cdValueDismissableAlert: 0 as number,
 };
+
+const progress = computed(
+  () =>
+    100 - (state.cdValueDismissableAlert / state.cdMaxDismissableAlert) * 100
+);
 const state = reactive(defaultState);
 
 // STATE: PERSISTENT DATA
@@ -103,6 +130,16 @@ onBeforeMount(() => {
         persistentData.auth = defaultAuthData;
       });
     }, "logout");
+
+  overlayCoverChannel.listen((data: boolean) => {
+    state.showOverlay = data;
+  });
+
+  dismissableAlertChannel.listen((data) => {
+    state.showDismissableAlert = data.show;
+    state.messageDismissableAlert = data.message;
+    state.cdValueDismissableAlert = 5000;
+  });
 });
 
 // EVENT: ON MOUNTED
@@ -120,4 +157,18 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+#vw_app-overlay-cover {
+  height: 100%;
+
+  > main {
+    height: 100%;
+  }
+}
+
+#vw_app-dismissable-alert {
+  position: absolute;
+  bottom: 0;
+  width: calc(100% - 2 * var(--padding-main-top));
+  margin: var(--padding-main);
+}
 </style>

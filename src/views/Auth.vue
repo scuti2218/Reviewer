@@ -1,14 +1,13 @@
 <template>
   <section id="vw_auth">
-    <section
-      class="vw_auth-container vw_auth-auth_message"
-      v-show="state.authenticating"
+    <BCard
+      title="LOGIN"
+      variant="primary"
+      class="vw_auth-card box-shadow-light outline-black"
+      @mouseleave="cmdMouseLeave"
     >
-      <span>Please wait while we try to log you in</span>
-    </section>
-    <section class="vw_auth-container" v-show="!state.authenticating">
-      <section class="vw_auth-buttons" @mouseleave="cmdMouseLeave">
-        <ButtonAuth
+      <section class="vw_auth-container">
+        <Button
           v-for="description in Object.values(descriptions)"
           v-show="description.isButton"
           :label="description.info.title"
@@ -18,27 +17,29 @@
           :disabled="description.info.params?.disableOnOffline(state.isOnline)"
         />
       </section>
-    </section>
-    <section class="vw_auth-container" v-show="!state.authenticating">
-      <section class="vw_auth-sidebar">
-        <span class="desc-title">{{ state.description.info.title }}</span>
-        <div class="desc-details">
-          <span
-            class="desc-detail"
-            v-for="detail in state.description.info.details"
-            >{{ detail }}</span
-          >
-        </div>
+    </BCard>
+    <BCard
+      :title="state.description.info.title"
+      variant="primary"
+      class="vw_auth-card box-shadow-light outline-black"
+    >
+      <section id="vw_auth-desc-details" class="vw_auth-container">
+        <span
+          class="desc-detail"
+          v-for="detail in state.description.info.details"
+          >{{ detail }}</span
+        >
       </section>
-    </section>
+    </BCard>
   </section>
 </template>
 
 <script setup lang="ts">
-import { ButtonAuth } from "@/components";
+import { Button } from "@/components";
 import { onBeforeMount, onMounted, reactive } from "vue";
 import { AuthTypeContainerInfo, AuthTypeInfo } from "@/controllers/auth";
 import { FirebaseConnectivityChannel } from "@/controllers/useFirebaseConnection";
+import { dismissableAlertChannel, overlayCoverChannel } from "@/controllers";
 
 // DESCRIPTION PREPARATION
 const char_invisible = "\u200B";
@@ -72,16 +73,28 @@ const cmdMouseLeave = () => {
   state.description = descriptions.default;
 };
 const cmdClick = (callback: () => Promise<any>) => {
-  state.authenticating = true;
-  callback().catch(() => {
-    state.authenticating = false;
-  });
+  overlayCoverChannel.transmit(true);
+  callback()
+    .then(() => {
+      dismissableAlertChannel.transmit({
+        show: true,
+        message: "Login Successful",
+      });
+    })
+    .catch(() => {
+      dismissableAlertChannel.transmit({
+        show: true,
+        message: "Login Successful",
+      });
+    })
+    .finally(() => {
+      overlayCoverChannel.transmit(false);
+    });
 };
 
 // STATES
 const state = reactive({
   description: descriptions.default as TDescriptions,
-  authenticating: false as boolean,
   isOnline: false as boolean,
   initNetwork: false as boolean,
 });
@@ -104,15 +117,59 @@ onMounted(() => {
 
 <style scoped>
 #vw_auth {
+  height: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  --padding: var(--padding-main);
-  padding: var(--padding);
-  height: calc(100vh - (2 * var(--padding)));
+  justify-content: space-evenly;
+  padding: var(--padding-main);
+  gap: var(--padding-main-top);
+  flex-wrap: wrap;
+  background-color: var(--bs-secondary);
+}
+
+.vw_auth-card {
+  min-width: 320px;
+  max-width: 450px;
+  width: 100%;
+  display: flex;
 }
 
 .vw_auth-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 30px;
+  padding: var(--padding-main);
+}
+
+/* #vw_auth-login-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  padding: var(--padding-main);
+
+  min-width: 320px;
+  max-width: 450px;
+} */
+
+/* #vw_auth-sidebar {
+  width: auto;
+
+  min-height: 20px;
+  max-height: 600px;
+  height: auto;
+  transition: all 1000ms;
+}
+
+#vw_auth-desc-details {
+  display: flex;
+  flex-direction: column;
+} */
+
+/* .vw_auth-container {
   width: calc(50% - var(--padding));
   height: 100%;
 
@@ -171,5 +228,5 @@ onMounted(() => {
     flex-direction: column;
     align-items: flex-start;
   }
-}
+} */
 </style>

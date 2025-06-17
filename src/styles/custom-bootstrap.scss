@@ -1,0 +1,40 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+
+// Override theme colors
+$theme-colors: map-merge(
+  $theme-colors,
+  (
+    "primary": #f7cb46,
+    "secondary": #f196e5,
+    "tertiary": #ff7a02,
+    "body": #fdf7e1,
+  )
+);
+
+// Export theme colors as CSS vars
+:root {
+  @each $color, $value in $theme-colors {
+    --bs-#{$color}: #{$value};
+  }
+}
+
+// Override the primary color before importing Bootstrap
+// $primary: #f7cb46;
+// $secondary: #f196e5;
+// $tertiary: #ff7a02;
+
+// $body: #fdf7e1;
+// $emphasis: #e63946;
+// $border: #e63946;
+
+// $danger: #ef476f;
+// $warning: #ffd166;
+// $success: #06d6a0;
+// $info: #118ab2;
+
+// $light: #06d6a0;
+// $dark: #118ab2;
+
+// Import all Bootstrap styles
+@import "bootstrap/scss/bootstrap";

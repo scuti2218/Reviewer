@@ -1,5 +1,5 @@
 <template>
-  <button class="button" :disabled="!!disabled">
+  <BButton class="button box-shadow outline-black" :disabled="!!disabled" variant="tertiary">
     <span class="icon" v-if="(!!slots.icon || !!icon) && !hideIcon">
       <slot name="icon" />
       {{ !slots.icon ? icon : "" }}
@@ -11,7 +11,7 @@
     <span class="default" v-if="!!slots.default && !hideDefault">
       <slot />
     </span>
-  </button>
+  </BButton>
 </template>
 
 <script setup lang="ts">
@@ -32,31 +32,21 @@ const slots = useSlots();
 
 <style scoped>
 .button {
-  outline: 5px solid var(--color-secondary);
-  color: var(--color-secondary);
   border: none;
   border-radius: 3px;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
   cursor: pointer;
-  transition: all 0.10s;
-  
-  --hover-opacity: 0.8;
-  --active-opacity: 0.5;
+  transition: all 0.1s;
+  height: 50px;
+
+  &:hover {
+    background-color: #fcd4aa;
+  }
 }
 
 .label {
   font-weight: bold;
-}
-
-.button:hover {
-  outline: 5px solid var(--color-tertiary);
-  color: var(--color-tertiary);
-}
-
-.button:active {
-  outline: 5px solid var(--color-secondary);
-  color: var(--color-secondary);
 }
 </style>
