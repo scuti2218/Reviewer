@@ -4,18 +4,26 @@ import {
   onAuthStateChanged,
   User,
   signInAnonymously,
+  deleteUser,
 } from "firebase/auth";
 import { auth, provider } from "@services/firebase";
 import { EventRadio } from "@controllers/EventChannel";
 
 // Firebase Auth
+export const currentUser = () => auth.currentUser;
 export const loginWithGoogle = (showPrompt: boolean = true) => {
   provider.setCustomParameters({ prompt: showPrompt ? "select_account" : "" });
   return signInWithPopup(auth, provider);
 };
 export const loginAnonymous = () => signInAnonymously(auth);
-export const logout = () => signOut(auth);
-export const currentUser = () => auth.currentUser;
+export const deleteUserIfAnonymous = async () => {
+  const user = currentUser();
+  if (!user || !user.isAnonymous) return;
+  return await deleteUser(user);
+};
+export const logout = () =>
+  deleteUserIfAnonymous().finally(() => signOut(auth));
+
 export function onFirebaseInitialize(): Promise<User | null> {
   return new Promise((resolve) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -25,8 +33,12 @@ export function onFirebaseInitialize(): Promise<User | null> {
   });
 }
 
-// Authentication Configs
+// Authentication Channel
 export const AuthChannel = new EventRadio<IAuthData>("auth");
+export const onLoginSuccessEvent = (data: IAuthData) =>
+  AuthChannel.transmit(data, "login");
+
+// Authentication Configs
 export const EAuthType = {
   Offline: "Offline",
   Anonymous: "Anonymous",
@@ -64,7 +76,7 @@ AuthTypeContainerInfo[EAuthType.Offline] = {
   title: EAuthType.Offline,
   details: [],
   callback: async () => {
-    AuthChannel.transmit({
+    onLoginSuccessEvent({
       loggedIn: true,
       type: EAuthType.Offline,
       user: null,
@@ -79,14 +91,14 @@ AuthTypeContainerInfo[EAuthType.Anonymous] = {
   title: EAuthType.Anonymous,
   details: [],
   callback: () =>
-    loginAnonymous().then(() =>
-      AuthChannel.transmit({
+    loginAnonymous().then(() => {
+      onLoginSuccessEvent({
         loggedIn: true,
         type: EAuthType.Anonymous,
         user: null,
         name: EAuthType.Anonymous,
-      })
-    ),
+      });
+    }),
   params: {
     disableOnOffline: (isOnline: boolean) => !isOnline,
   },
@@ -95,14 +107,14 @@ AuthTypeContainerInfo[EAuthType.Guest] = {
   title: EAuthType.Guest,
   details: [],
   callback: () =>
-    loginAnonymous().then(() =>
-      AuthChannel.transmit({
+    loginAnonymous().then(() => {
+      onLoginSuccessEvent({
         loggedIn: true,
         type: EAuthType.Guest,
         user: null,
         name: EAuthType.Guest,
-      })
-    ),
+      });
+    }),
   params: {
     disableOnOffline: (isOnline: boolean) => !isOnline,
   },
@@ -112,7 +124,7 @@ AuthTypeContainerInfo[EAuthType.Google] = {
   details: [],
   callback: () =>
     loginWithGoogle().then((result) => {
-      AuthChannel.transmit({
+      onLoginSuccessEvent({
         loggedIn: true,
         type: EAuthType.Google,
         user: result.user,

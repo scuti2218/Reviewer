@@ -5,9 +5,17 @@ import { EventRadio } from "./EventChannel";
 export const FirebaseConnectivityChannel = new EventRadio<boolean>(
   "connectivity-firebase"
 );
-const connectedRef = dbRef(rdb, ".info/connected");
+var lastNetworkCheck: boolean | undefined = undefined;
 export function useFirebaseConnection() {
-  onValue(connectedRef, (snapshot) =>
-    FirebaseConnectivityChannel.transmit(!!snapshot.val(), "transmit")
-  );
+  onValue(dbRef(rdb, ".info/connected"), (snapshot) => {
+    const newNetworkCheck = !!snapshot.val();
+    if (lastNetworkCheck !== newNetworkCheck) {
+      FirebaseConnectivityChannel.transmit(newNetworkCheck, "transmit");
+      lastNetworkCheck = newNetworkCheck;
+      console.log(
+        "Firebase Connection: " +
+          (newNetworkCheck ? "Connected" : "Disconnected")
+      );
+    }
+  });
 }

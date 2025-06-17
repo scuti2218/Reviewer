@@ -8,7 +8,7 @@
     </section>
     <section class="vw_auth-container" v-show="!state.authenticating">
       <section class="vw_auth-buttons" @mouseleave="cmdMouseLeave">
-        <Button
+        <ButtonAuth
           v-for="description in Object.values(descriptions)"
           v-show="description.isButton"
           :label="description.info.title"
@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import { Button } from "@/components";
+import { ButtonAuth } from "@/components";
 import { onBeforeMount, onMounted, reactive } from "vue";
 import { AuthTypeContainerInfo, AuthTypeInfo } from "@/controllers/auth";
 import { FirebaseConnectivityChannel } from "@/controllers/useFirebaseConnection";
@@ -98,7 +98,7 @@ onBeforeMount(() => {
 });
 
 onMounted(() => {
-  if (!state.initNetwork) FirebaseConnectivityChannel.transmit(true, "request");
+  FirebaseConnectivityChannel.transmit(true, "request");
 });
 </script>
 
@@ -107,7 +107,7 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  --padding: 30px;
+  --padding: var(--padding-main);
   padding: var(--padding);
   height: calc(100vh - (2 * var(--padding)));
 }

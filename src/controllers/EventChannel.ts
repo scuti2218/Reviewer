@@ -36,10 +36,18 @@ export class EventRadio<TData> {
     this.channel = channel;
   }
 
-  transmit = (data: TData, targetPort?: string) =>
+  transmit = (data: TData, targetPort?: string) => {
     this.eventChannel.emit(this.channel, data, targetPort);
-  listen = (callback: (data: TData) => void, ...filterPorts: string[]) =>
+    return this;
+  };
+
+  listen = (callback: (data: TData) => void, ...filterPorts: string[]) => {
     this.eventChannel.on(this.channel, callback, ...filterPorts);
-  disconnect = (callback?: (data: TData) => void) =>
+    return this;
+  };
+
+  disconnect = (callback?: (data: TData) => void) => {
     this.eventChannel.off(this.channel, callback);
+    return this;
+  };
 }

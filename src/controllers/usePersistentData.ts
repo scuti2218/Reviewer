@@ -11,6 +11,6 @@ export function usePersistentData<T extends object>(key: string, defaults: T) {
   return state
 }
 
-export const resetPersistentData = (state: object, defaultState: object) => {
+export function resetPersistentData<T extends object>(state: T, defaultState: T) {
   Object.assign(state, JSON.parse(JSON.stringify(defaultState)))
 }
