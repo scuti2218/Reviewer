@@ -1,5 +1,6 @@
 import { useAlertChannel } from "./AlertChannel";
 import EventChannel, { EventRadio } from "./EventChannel";
+import { themeColors, getThemeColor } from "./ThemeColors";
 import { overlayCoverChannel } from "./overlayCover";
 import { useRouteTo } from "./router";
 import {
@@ -12,6 +13,8 @@ export {
   useAlertChannel,
   EventChannel,
   EventRadio,
+  themeColors,
+  getThemeColor,
   overlayCoverChannel,
   useRouteTo,
   FirebaseConnectivityChannel,

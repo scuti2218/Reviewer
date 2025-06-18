@@ -13,7 +13,6 @@ import { NavBar } from "@/views";
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
   justify-content: space-between;
 }
 

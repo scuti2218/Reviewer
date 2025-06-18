@@ -1,5 +1,5 @@
 <template>
-  <BNavbar class="vw_navBar" toggleable="lg" variant="dark">
+  <BNavbar id="vw_navBar" toggleable="lg" variant="dark">
     <BNavbarBrand id="vw_navBar-brand">Reviewer</BNavbarBrand>
     <BNavbarToggle target="nav-collapse" />
     <BCollapse id="nav-collapse" is-nav>

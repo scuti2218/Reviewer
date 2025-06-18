@@ -30,6 +30,7 @@ declare module 'vue' {
     ButtonAuth: typeof import('./src/components/buttons/ButtonAuth.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    WaveDivider: typeof import('./src/components/divider/WaveDivider.vue')['default']
   }
   export interface GlobalDirectives {
     vBColorMode: typeof import('bootstrap-vue-next/directives/BColorMode')['vBColorMode']
