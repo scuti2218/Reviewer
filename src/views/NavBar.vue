@@ -20,6 +20,7 @@
 <script setup lang="ts">
 import { onBeforeMount, onMounted, reactive } from "vue";
 import { AuthChannel, IAuthData, defaultAuthData } from "@/controllers/auth";
+import { useAlertChannel } from "@/controllers";
 const defaultState = {
   auth: defaultAuthData as IAuthData,
 };
@@ -37,7 +38,13 @@ onBeforeMount(() => {
 onMounted(async () => {
   AuthChannel.transmit(defaultAuthData, "request");
 });
-const cmdLogout = () => AuthChannel.transmit(state.auth, "logout");
+const cmdLogout = () => {
+  AuthChannel.transmit(state.auth, "logout");
+  useAlertChannel("app").transmit({
+    message: "Logged Out Succesfully",
+    variant: "success",
+  });
+};
 </script>
 
 <style scoped>

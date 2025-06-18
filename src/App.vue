@@ -4,26 +4,13 @@
       <Splashart v-if="!state.initDone" @done="onSplashartDone" />
       <Auth v-else-if="!persistentData.auth.loggedIn" />
       <PageWrapper v-else />
-      <BAlert
-        v-model="state.cdValueDismissableAlert"
-        dismissible
-        fade
-        @close-countdown="state.cdMaxDismissableAlert = $event"
-        id="vw_app-dismissable-alert"
-      >
-        {{ state.messageDismissableAlert }} <b>&rArr;</b>
-        <BProgress
-          striped
-          :value="progress"
-          height="6px"
-        />
-      </BAlert>
+      <AlertDismissable keyID="app" noHoverPause />
     </main>
   </BOverlay>
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeMount, onMounted, reactive, watch } from "vue";
+import { onBeforeMount, onMounted, reactive, watch } from "vue";
 import { Auth, Splashart, PageWrapper } from "@/views";
 import { User } from "firebase/auth";
 import {
@@ -42,7 +29,8 @@ import {
   useFirebaseConnection,
 } from "@controllers/useFirebaseConnection";
 import { usePersistentData } from "@controllers/usePersistentData";
-import { overlayCoverChannel, dismissableAlertChannel } from "@/controllers";
+import { overlayCoverChannel } from "@/controllers";
+import { AlertDismissable } from "@/components";
 
 // DATA: STATE
 const defaultState = {
@@ -52,16 +40,7 @@ const defaultState = {
   initDone: false as boolean,
   isOnline: false as boolean,
   showOverlay: false as boolean,
-  showDismissableAlert: false as boolean,
-  messageDismissableAlert: "" as string,
-  cdMaxDismissableAlert: 5000 as number,
-  cdValueDismissableAlert: 0 as number,
 };
-
-const progress = computed(
-  () =>
-    100 - (state.cdValueDismissableAlert / state.cdMaxDismissableAlert) * 100
-);
 const state = reactive(defaultState);
 
 // STATE: PERSISTENT DATA
@@ -134,12 +113,6 @@ onBeforeMount(() => {
   overlayCoverChannel.listen((data: boolean) => {
     state.showOverlay = data;
   });
-
-  dismissableAlertChannel.listen((data) => {
-    state.showDismissableAlert = data.show;
-    state.messageDismissableAlert = data.message;
-    state.cdValueDismissableAlert = 5000;
-  });
 });
 
 // EVENT: ON MOUNTED
@@ -163,12 +136,5 @@ onMounted(async () => {
   > main {
     height: 100%;
   }
-}
-
-#vw_app-dismissable-alert {
-  position: absolute;
-  bottom: 0;
-  width: calc(100% - 2 * var(--padding-main-top));
-  margin: var(--padding-main);
 }
 </style>

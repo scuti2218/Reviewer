@@ -39,7 +39,7 @@ import { Button } from "@/components";
 import { onBeforeMount, onMounted, reactive } from "vue";
 import { AuthTypeContainerInfo, AuthTypeInfo } from "@/controllers/auth";
 import { FirebaseConnectivityChannel } from "@/controllers/useFirebaseConnection";
-import { dismissableAlertChannel, overlayCoverChannel } from "@/controllers";
+import { useAlertChannel, overlayCoverChannel } from "@/controllers";
 
 // DESCRIPTION PREPARATION
 const char_invisible = "\u200B";
@@ -76,15 +76,15 @@ const cmdClick = (callback: () => Promise<any>) => {
   overlayCoverChannel.transmit(true);
   callback()
     .then(() => {
-      dismissableAlertChannel.transmit({
-        show: true,
+      useAlertChannel("app").transmit({
         message: "Login Successful",
+        variant: "success"
       });
     })
     .catch(() => {
-      dismissableAlertChannel.transmit({
-        show: true,
-        message: "Login Successful",
+      useAlertChannel("app").transmit({
+        message: "Login Failed",
+        variant: "danger"
       });
     })
     .finally(() => {

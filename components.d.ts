@@ -8,6 +8,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AlertDismissable: typeof import('./src/components/alerts/AlertDismissable.vue')['default']
     BAlert: typeof import('bootstrap-vue-next/components/BAlert')['BAlert']
     BAvatar: typeof import('bootstrap-vue-next/components/BAvatar')['BAvatar']
     BButton: typeof import('bootstrap-vue-next/components/BButton')['BButton']

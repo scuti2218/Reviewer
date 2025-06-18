@@ -28,26 +28,26 @@ class EventChannel {
   }
 }
 export default new EventChannel();
-export class EventRadio<TData> {
+export class EventRadio<TData> extends EventChannel {
   private channel: string = "";
-  private eventChannel: EventChannel = new EventChannel();
 
   constructor(channel: string) {
+    super();
     this.channel = channel;
   }
 
   transmit = (data: TData, targetPort?: string) => {
-    this.eventChannel.emit(this.channel, data, targetPort);
+    this.emit(this.channel, data, targetPort);
     return this;
   };
 
   listen = (callback: (data: TData) => void, ...filterPorts: string[]) => {
-    this.eventChannel.on(this.channel, callback, ...filterPorts);
+    this.on(this.channel, callback, ...filterPorts);
     return this;
   };
 
   disconnect = (callback?: (data: TData) => void) => {
-    this.eventChannel.off(this.channel, callback);
+    this.off(this.channel, callback);
     return this;
   };
 }

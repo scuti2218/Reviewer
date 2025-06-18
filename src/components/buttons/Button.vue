@@ -1,5 +1,9 @@
 <template>
-  <BButton class="button box-shadow outline-black" :disabled="!!disabled" variant="tertiary">
+  <BButton
+    class="button box-shadow outline-black"
+    :disabled="!!disabled"
+    variant="tertiary"
+  >
     <span class="icon" v-if="(!!slots.icon || !!icon) && !hideIcon">
       <slot name="icon" />
       {{ !slots.icon ? icon : "" }}
@@ -43,6 +47,9 @@ const slots = useSlots();
 
   &:hover {
     background-color: #fcd4aa;
+  }
+  &:enabled {
+    outline: 2px solid var(--bs-dark);
   }
 }
 

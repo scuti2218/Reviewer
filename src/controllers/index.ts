@@ -1,4 +1,4 @@
-import { dismissableAlertChannel } from "./dismissableAlert";
+import { useAlertChannel } from "./AlertChannel";
 import EventChannel, { EventRadio } from "./EventChannel";
 import { overlayCoverChannel } from "./overlayCover";
 import { useRouteTo } from "./router";
@@ -9,7 +9,7 @@ import {
 import { usePersistentData, resetPersistentData } from "./usePersistentData";
 
 export {
-  dismissableAlertChannel,
+  useAlertChannel,
   EventChannel,
   EventRadio,
   overlayCoverChannel,
