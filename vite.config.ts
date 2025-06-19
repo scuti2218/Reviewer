@@ -41,7 +41,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@use "bootstrap/scss/functions";`,
+        // additionalData: `@use "bootstrap/scss/functions";`,
       },
     },
   },

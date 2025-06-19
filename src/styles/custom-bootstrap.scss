@@ -16,7 +16,7 @@ $theme-colors: map-merge(
     // $success: #06d6a0;
     // $info: #118ab2;
     // $light: #06d6a0;
-    // $dark: #118ab2;,,
+    // $dark: #118ab2;,,,
   )
 );
 
@@ -24,6 +24,8 @@ $theme-colors: map-merge(
 :root {
   @each $color, $value in $theme-colors {
     --bs-#{$color}: #{$value};
+    #{'--bs-#{$color}-darken'}: darken($value, 10%);
+    #{'--bs-#{$color}-lighten'}: lighten($value, 10%);
   }
 }
 

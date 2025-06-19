@@ -35,10 +35,12 @@ declare module 'vue' {
     ButtonAddHomeFavorite: typeof import('./src/components/buttons/ButtonAddHomeFavorite.vue')['default']
     ButtonAuth: typeof import('./src/components/buttons/ButtonAuth.vue')['default']
     CardHomeFavorite: typeof import('./src/components/cards/CardHomeFavorite.vue')['default']
+    GreaterThanIcon: typeof import('./src/components/svgComponents/GreaterThanIcon.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    StarIcon: typeof import('./src/components/svgComponents/StarIcon.vue')['default']
     TagHomeRecent: typeof import('./src/components/tags/TagHomeRecent.vue')['default']
-    WaveDivider: typeof import('./src/components/divider/WaveDivider.vue')['default']
+    WaveDivider: typeof import('./src/components/svgComponents/WaveDivider.vue')['default']
   }
   export interface GlobalDirectives {
     vBColorMode: typeof import('bootstrap-vue-next/directives/BColorMode')['vBColorMode']

@@ -5,7 +5,9 @@ import ButtonAddHomeFavorite from "./buttons/ButtonAddHomeFavorite.vue";
 
 import CardHomeFavorite from "./cards/CardHomeFavorite.vue";
 
-import WaveDivider from "./divider/WaveDivider.vue";
+import WaveDivider from "./svgComponents/WaveDivider.vue";
+import StarIcon from "./svgComponents/starIcon.vue";
+import GreaterThanIcon from "./svgComponents/GreaterThanIcon.vue";
 
 import TagHomeRecent from "./tags/TagHomeRecent.vue";
 
@@ -15,5 +17,7 @@ export {
   ButtonAddHomeFavorite,
   CardHomeFavorite,
   WaveDivider,
+  StarIcon,
+  GreaterThanIcon,
   TagHomeRecent,
 };

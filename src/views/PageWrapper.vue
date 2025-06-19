@@ -2,11 +2,10 @@
   <section id="vw_pageWrapper">
     <NavBar />
     <router-view id="vw_pageWrapper-content" />
-    <footer></footer>
   </section>
 </template>
 <script setup lang="ts">
-import { NavBar } from "@/views";
+import NavBar from "@views/NavBar.vue";
 </script>
 <style scoped>
 #vw_pageWrapper {
@@ -18,10 +17,5 @@ import { NavBar } from "@/views";
 
 #vw_pageWrapper-content {
   flex: 1;
-}
-
-footer {
-  height: 50px;
-  background-color: red;
 }
 </style>
