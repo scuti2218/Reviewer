@@ -3,23 +3,64 @@
     <!-- <h1>Home</h1>
     <button @click="routeTo('/Sample')">Go to Sample</button> -->
     <!-- Favorites -->
+    <!-- Recently visited topics -->
     <!-- Topics -->
-    <section id="vw_home-header"></section>
+    <section id="vw_home-favorites" class="main-container">
+      <h1>Favorites</h1>
+      <section class="container-scrollable scrollable">
+        <ButtonAddHomeFavorite v-if="state.favorites.length == 0" />
+        <CardHomeFavorite
+          v-else
+          v-for="topic in state.favorites"
+          :data="topic"
+        />
+      </section>
+    </section>
     <WaveDivider background="secondary" />
     <section id="vw_home-footer"></section>
   </section>
 </template>
 <script setup lang="ts">
-import { useRouteTo } from "@/controllers/router";
-import { WaveDivider } from "@/components";
-const routeTo = useRouteTo();
+import {
+  WaveDivider,
+  CardHomeFavorite,
+  ButtonAddHomeFavorite,
+} from "@/components";
+import { reactive } from "vue";
+import { ITopicProperties } from "@/models";
+
+const defaultState = {
+  favorites: [
+    // {
+    //   title: "Title 1",
+    //   description: "this is a blank",
+    //   version: "0.1.1",
+    //   token: "123456",
+    //   code: "12345",
+    // },
+    // {
+    //   title: "Title 2",
+    //   description: "this is a blank",
+    //   version: "0.1.2",
+    //   token: "123456",
+    //   code: "289465",
+    // },
+    // {
+    //   title: "Title 3",
+    //   description: "this is a blank",
+    //   version: "0.1.2",
+    //   token: "123456",
+    // },
+  ] as ITopicProperties[],
+};
+const state = reactive(defaultState);
 </script>
 <style scoped>
-#vw_home-header {
+#vw_home-favorites {
   width: 100%;
-  height: 600px;
   background-color: var(--bs-primary);
 }
+
 #vw_home-footer {
   width: 100%;
   height: 600px;

@@ -22,7 +22,6 @@ import {
   loginAnonymous,
   loginWithGoogle,
   deleteUserIfAnonymous,
-  logout,
 } from "@/controllers/auth";
 import {
   FirebaseConnectivityChannel,
@@ -105,9 +104,7 @@ onBeforeMount(() => {
       persistentData.auth = data;
     }, "login")
     .listen(() => {
-      logout().finally(() => {
-        persistentData.auth = defaultAuthData;
-      });
+      persistentData.auth = defaultAuthData;
     }, "logout");
 
   overlayCoverChannel.listen((data: boolean) => {

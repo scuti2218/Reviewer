@@ -10,6 +10,8 @@
       d="M0 0 H1440 V340 H0 Z"
       :fill="state.background"
       fill-opacity="1"
+      :stroke="state.background"
+      stroke-width="8"
       style="transform: translate(0px, 0px)"
     />
 
@@ -20,7 +22,7 @@
       :style="shadowStyleWave"
     />
     <path
-      d="M0 0 H1440 V8 H0 Z"
+      d="M0 0 H1440 V10 H0 Z"
       :fill="state.outline"
       fill-opacity="0.3"
       :style="shadowStyleBox"
@@ -74,7 +76,7 @@ const shadowStyleWave = computed(() => {
 });
 const shadowStyleBox = computed(() => {
   const translateY = Math.round(
-    8 + 20 + ((componentPosition.bottomPercent - 50) / 100) * 12
+    -10 + 20 + ((componentPosition.bottomPercent - 50) / 100) * 12
   );
 
   return {

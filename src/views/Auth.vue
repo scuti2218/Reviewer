@@ -39,10 +39,13 @@ import { Button } from "@/components";
 import { onBeforeMount, onMounted, reactive } from "vue";
 import { AuthTypeContainerInfo, AuthTypeInfo } from "@/controllers/auth";
 import { FirebaseConnectivityChannel } from "@/controllers/useFirebaseConnection";
-import { useAlertChannel, overlayCoverChannel } from "@/controllers";
+import {
+  useAlertChannel,
+  overlayCoverChannel,
+  charInvisible,
+} from "@/controllers";
 
 // DESCRIPTION PREPARATION
-const char_invisible = "\u200B";
 type TDescriptions = {
   isButton: boolean;
   info: AuthTypeInfo;
@@ -60,7 +63,7 @@ descriptions["default"] = {
     title: "REVIEWER",
     details: [
       "Welcome to Reviewer App",
-      char_invisible,
+      charInvisible,
       "Please choose your authentication type.",
     ],
     callback: async () => {},
@@ -78,13 +81,13 @@ const cmdClick = (callback: () => Promise<any>) => {
     .then(() => {
       useAlertChannel("app").transmit({
         message: "Login Successful",
-        variant: "success"
+        variant: "success",
       });
     })
     .catch(() => {
       useAlertChannel("app").transmit({
         message: "Login Failed",
-        variant: "danger"
+        variant: "danger",
       });
     })
     .finally(() => {
@@ -142,91 +145,4 @@ onMounted(() => {
   gap: 30px;
   padding: var(--padding-main);
 }
-
-/* #vw_auth-login-buttons {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 30px;
-  padding: var(--padding-main);
-
-  min-width: 320px;
-  max-width: 450px;
-} */
-
-/* #vw_auth-sidebar {
-  width: auto;
-
-  min-height: 20px;
-  max-height: 600px;
-  height: auto;
-  transition: all 1000ms;
-}
-
-#vw_auth-desc-details {
-  display: flex;
-  flex-direction: column;
-} */
-
-/* .vw_auth-container {
-  width: calc(50% - var(--padding));
-  height: 100%;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  > section {
-    border-radius: 10px;
-    background-color: var(--color-quaternary);
-    outline: 6px solid var(--color-secondary);
-  }
-}
-
-.vw_auth-auth_message {
-  flex: 1;
-}
-
-.vw_auth-buttons {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 40px;
-  padding: 30px;
-
-  > .button {
-    height: 50px;
-    width: 250px;
-  }
-}
-
-.vw_auth-sidebar {
-  --padding-sidebar-block: 10px;
-  --padding-sidebar-inline: 20px;
-  padding: var(--padding-sidebar-block) var(--padding-sidebar-inline);
-  width: calc(100% - (2 * var(--padding-sidebar-inline)));
-  height: 100%;
-  font-family: inherit;
-  font-weight: 500;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-
-  > .desc-title {
-    font-size: 1.5em;
-    font-weight: bold;
-  }
-
-  > .desc-details {
-    align-self: flex-start;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-} */
 </style>

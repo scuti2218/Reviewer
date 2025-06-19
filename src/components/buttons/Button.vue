@@ -36,21 +36,10 @@ const slots = useSlots();
 
 <style scoped>
 .button {
-  border: none;
-  border-radius: 3px;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  cursor: pointer;
-  transition: all 0.1s;
   height: 50px;
-
-  &:hover {
-    background-color: #fcd4aa;
-  }
-  &:enabled {
-    outline: 2px solid var(--bs-dark);
-  }
 }
 
 .label {

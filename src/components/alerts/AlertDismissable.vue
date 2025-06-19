@@ -1,6 +1,6 @@
 <template>
   <BAlert
-    class="vw_app-alert-dismissable"
+    class="alert-dismissable"
     v-model="state.timer"
     dismissible
     fade
@@ -10,7 +10,7 @@
   >
     {{ state.message }}
     <BProgress
-      class="vw_app-alert-progress outline-black"
+      class="alert-progress outline-black"
       striped
       :max="state.timer"
       :value="state.value"
@@ -59,7 +59,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.vw_app-alert-dismissable {
+.alert-dismissable {
   position: absolute;
   bottom: 0;
   width: calc(100% - 2 * var(--padding-main-top));

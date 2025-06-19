@@ -7,7 +7,7 @@ import { onMounted } from "vue";
 const emits = defineEmits(["done"]);
 
 onMounted(async () => {
-  setTimeout(() => emits("done"), 2000);
+  setTimeout(() => emits("done"), 500);
 });
 </script>
 <style scoped></style>

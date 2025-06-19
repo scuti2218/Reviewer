@@ -1,5 +1,5 @@
 <template>
-  <BNavbar id="vw_navBar" toggleable="lg" variant="dark">
+  <BNavbar id="vw_navBar" toggleable="lg" variant="dark" class="sticky-top">
     <BNavbarBrand id="vw_navBar-brand">Reviewer</BNavbarBrand>
     <BNavbarToggle target="nav-collapse" />
     <BCollapse id="nav-collapse" is-nav>
@@ -19,8 +19,13 @@
 
 <script setup lang="ts">
 import { onBeforeMount, onMounted, reactive } from "vue";
-import { AuthChannel, IAuthData, defaultAuthData } from "@/controllers/auth";
-import { useAlertChannel } from "@/controllers";
+import {
+  AuthChannel,
+  IAuthData,
+  defaultAuthData,
+  logout,
+} from "@/controllers/auth";
+import { overlayCoverChannel, useAlertChannel } from "@/controllers";
 const defaultState = {
   auth: defaultAuthData as IAuthData,
 };
@@ -39,10 +44,14 @@ onMounted(async () => {
   AuthChannel.transmit(defaultAuthData, "request");
 });
 const cmdLogout = () => {
-  AuthChannel.transmit(state.auth, "logout");
-  useAlertChannel("app").transmit({
-    message: "Logged Out Succesfully",
-    variant: "success",
+  overlayCoverChannel.transmit(true);
+  logout().finally(() => {
+    useAlertChannel("app").transmit({
+      message: "Logged Out Succesfully",
+      variant: "success",
+    });
+    overlayCoverChannel.transmit(false);
+    AuthChannel.transmit(state.auth, "logout");
   });
 };
 </script>
