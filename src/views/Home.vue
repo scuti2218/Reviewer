@@ -3,10 +3,8 @@
     <!-- <h1>Home</h1>
     <button @click="routeTo('/Sample')">Go to Sample</button> -->
     <!-- Favorites -->
-    <!-- Recently visited topics -->
-    <!-- Topics -->
     <section id="vw_home-favorites" class="main-container">
-      <h1>Favorites</h1>
+      <h1 id="vw_home-favorites-title">Favorites</h1>
       <section class="container-scrollable scrollable">
         <ButtonAddHomeFavorite v-if="state.favorites.length == 0" />
         <CardHomeFavorite
@@ -16,7 +14,15 @@
         />
       </section>
     </section>
+    <!-- Recently reviewed topics -->
+    <section id="vw_home-recents" class="main-container" v-show="state.recents.length != 0">
+      <h3 id="vw_home-recents-title">Recently reviewed topics</h3>
+      <section id="vw_home-recents-contents">
+        <TagHomeRecent v-for="topic in state.recents" :data="topic" />
+      </section>
+    </section>
     <WaveDivider background="secondary" />
+    <!-- Topics -->
     <section id="vw_home-footer"></section>
   </section>
 </template>
@@ -25,6 +31,7 @@ import {
   WaveDivider,
   CardHomeFavorite,
   ButtonAddHomeFavorite,
+  TagHomeRecent,
 } from "@/components";
 import { reactive } from "vue";
 import { ITopicProperties } from "@/models";
@@ -52,13 +59,47 @@ const defaultState = {
     //   token: "123456",
     // },
   ] as ITopicProperties[],
+  recents: [
+    // {
+    //   title: "Title 1",
+    // },
+    // {
+    //   title: "Title 1dwaaaaaaaaaa",
+    // },
+    // {
+    //   title: "Title 1dwaaaaaaaaaa",
+    // },
+    // {
+    //   title: "Title 1",
+    // },
+    // {
+    //   title: "Title 1waddddddddddddddddd",
+    // },
+    // {
+    //   title: "Title 1waddddddddddddddddd",
+    // },
+  ] as ITopicProperties[],
 };
 const state = reactive(defaultState);
 </script>
 <style scoped>
-#vw_home-favorites {
+#vw_home-favorites,
+#vw_home-recents {
   width: 100%;
   background-color: var(--bs-primary);
+}
+
+#vw_home-recents {
+  > #vw_home-recents-title {
+    text-align: left;
+  }
+
+  > #vw_home-recents-contents {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    gap: 10px;
+  }
 }
 
 #vw_home-footer {

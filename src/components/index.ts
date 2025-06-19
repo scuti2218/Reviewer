@@ -7,10 +7,13 @@ import CardHomeFavorite from "./cards/CardHomeFavorite.vue";
 
 import WaveDivider from "./divider/WaveDivider.vue";
 
+import TagHomeRecent from "./tags/TagHomeRecent.vue";
+
 export {
   AlertDismissable,
   Button,
   ButtonAddHomeFavorite,
   CardHomeFavorite,
   WaveDivider,
+  TagHomeRecent,
 };

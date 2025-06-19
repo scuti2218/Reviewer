@@ -21,6 +21,7 @@ declare module 'vue' {
     BCollapse: typeof import('bootstrap-vue-next/components/BCollapse')['BCollapse']
     BDropdownItem: typeof import('bootstrap-vue-next/components/BDropdown')['BDropdownItem']
     BFormInput: typeof import('bootstrap-vue-next/components/BFormInput')['BFormInput']
+    BFormTag: typeof import('bootstrap-vue-next/components/BFormTags')['BFormTag']
     BNavbar: typeof import('bootstrap-vue-next/components/BNavbar')['BNavbar']
     BNavbarBrand: typeof import('bootstrap-vue-next/components/BNavbar')['BNavbarBrand']
     BNavbarNav: typeof import('bootstrap-vue-next/components/BNavbar')['BNavbarNav']
@@ -36,6 +37,7 @@ declare module 'vue' {
     CardHomeFavorite: typeof import('./src/components/cards/CardHomeFavorite.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TagHomeRecent: typeof import('./src/components/tags/TagHomeRecent.vue')['default']
     WaveDivider: typeof import('./src/components/divider/WaveDivider.vue')['default']
   }
   export interface GlobalDirectives {
